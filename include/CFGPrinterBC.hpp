@@ -2,6 +2,7 @@
 #define CFG_PRINTER_BC_H
 
 #include "llvm/IR/PassManager.h"
+#include <map>
 
 
 namespace cfgprinterbc {
@@ -20,7 +21,8 @@ struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
 
 
     void printFunctionName(llvm::Function &F);
-    void printBasicBlock(llvm::BasicBlock &BB);
+    void printBasicBlock(llvm::BasicBlock &BB, std::map<std::string, int> labelMap);
+    void printInstruction(llvm::Instruction &I);
 
     private:
         llvm::raw_ostream &OS;
