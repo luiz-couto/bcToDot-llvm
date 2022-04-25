@@ -1,15 +1,13 @@
-#ifndef CFG_PRINTER_H
-#define CFG_PRINTER_H
+#ifndef CFG_PRINTER_BC_H
+#define CFG_PRINTER_BC_H
 
 #include "llvm/IR/PassManager.h"
 
-using namespace llvm;
 
-namespace cfgprinter {
+namespace cfgprinterbc {
 
-/// A transformation pass that evaluates all constant-only add instructions
-/// and replaces their uses by the computed constant.
-struct CFGPrinterPass : public llvm::PassInfoMixin<CFGPrinterPass> {
+/// A pass that prints bytecode programs into the dot format
+struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
     /// Gets the result of AddConstAnalysis for the function \p F and uses it
     /// to replace the uses of the collected add instructions by their final
     /// value.
@@ -20,7 +18,7 @@ struct CFGPrinterPass : public llvm::PassInfoMixin<CFGPrinterPass> {
                                 llvm::FunctionAnalysisManager &FAM);
 };
 
-} // namespace cfgprinter
+} // namespace cfgprinterbc
 
 
 #endif

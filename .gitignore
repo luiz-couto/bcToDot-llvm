@@ -36,3 +36,6 @@ build
 
 # VSCode Files
 .vscode
+
+# Auxiliar scripts
+cmake.sh
