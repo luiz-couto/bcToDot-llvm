@@ -20,6 +20,7 @@ struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
 
 
     void printFunctionName(llvm::Function &F);
+    void printBasicBlock(llvm::BasicBlock &BB);
 
     private:
         llvm::raw_ostream &OS;

@@ -10,13 +10,18 @@ void CFGPrinterBCPass::printFunctionName(Function &F) {
     OS << "digraph CFG for " << "'" << F.getName().str() << "'" << " function {" << '\n';
 }
 
+void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB) {
+    OS << BB.getName().str() << " ";
+}
+
 PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FAM) {
     // get Function name
     printFunctionName(F);
     
     for(BasicBlock &BB : F) {
-        // printBasicBlockHeader();
-        BB.setName("BB" + BBcounter);
+        BB.setName("BB" + std::to_string(BBcounter));
+        printBasicBlock(BB);
+
         for (Instruction &I : BB) {
             OS << I << '\n';
         }
