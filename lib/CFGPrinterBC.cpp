@@ -6,9 +6,14 @@ using namespace llvm;
 namespace cfgprinterbc {
 
 PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FAM) {
+    
+    // get Function name
+    OS << F.getName().str() << '\n';
+    
     for(BasicBlock &BB : F) {
+        BB.printAsOperand(OS, false);
         for (Instruction &I : BB) {
-            errs() << I << '\n';
+            OS << I << '\n';
         }
     }
 

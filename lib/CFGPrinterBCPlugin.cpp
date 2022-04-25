@@ -15,7 +15,7 @@ bool registerPipeline(StringRef Name, FunctionPassManager &FPM,
                       ArrayRef<PassBuilder::PipelineElement>) {
 
     if (Name == "cfgPrinterBC") {
-        FPM.addPass(cfgprinterbc::CFGPrinterBCPass());
+        FPM.addPass(cfgprinterbc::CFGPrinterBCPass(errs()));
         return true;
     }
 

@@ -8,6 +8,7 @@ namespace cfgprinterbc {
 
 /// A pass that prints bytecode programs into the dot format
 struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
+    explicit CFGPrinterBCPass(llvm::raw_ostream &OS) : OS(OS) {}
     /// Gets the result of AddConstAnalysis for the function \p F and uses it
     /// to replace the uses of the collected add instructions by their final
     /// value.
@@ -16,6 +17,9 @@ struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
     /// AddConstAnalysis).
     llvm::PreservedAnalyses run(llvm::Function &F,
                                 llvm::FunctionAnalysisManager &FAM);
+
+    private:
+        llvm::raw_ostream &OS;
 };
 
 } // namespace cfgprinterbc
