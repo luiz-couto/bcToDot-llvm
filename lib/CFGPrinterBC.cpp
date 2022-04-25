@@ -11,7 +11,11 @@ void CFGPrinterBCPass::printFunctionName(Function &F) {
 }
 
 void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB) {
-    OS << BB.getName().str() << " ";
+    OS << BB.getName().str() << " [shape=record, label=\"{" << BB.getName().str() << ":\\l\\l\n";
+    for (Instruction &I : BB) {
+        OS << I << '\n';
+    }
+    OS << "}\"];\n";
 }
 
 PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FAM) {
@@ -21,10 +25,6 @@ PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FA
     for(BasicBlock &BB : F) {
         BB.setName("BB" + std::to_string(BBcounter));
         printBasicBlock(BB);
-
-        for (Instruction &I : BB) {
-            OS << I << '\n';
-        }
         BBcounter++;
     }
 
