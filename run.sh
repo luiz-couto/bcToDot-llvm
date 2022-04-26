@@ -4,13 +4,15 @@ cd benchmarks
 
 for d in */ ; do
     bench=${d%?}
-    echo $bench
-
-    cd $bench
     
-    mkdir dot
+    cd $bench
     cd dot
-    ./../../../build/bin/CFGPrinterBC ../IR/${bench}.bc
+    
+    for FILE in * ; do
+        echo ${FILE}
+        dot -Tpdf ${FILE} -o ${FILE}.pdf
+        mv ${FILE}.pdf ../pdf/${FILE}.pdf
+    done
 
     cd ../..
 

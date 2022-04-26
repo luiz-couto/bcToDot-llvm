@@ -162,6 +162,7 @@ PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FA
     dotStr += "}\n";
 
     writeFile(F.getName().str() + ".dot", dotStr);
+    dotStr = "";
 
     return PreservedAnalyses::all();
 }
@@ -191,7 +192,7 @@ int main(int Argc, char **Argv) {
         return -1;
     }
 
-    // Create a FunctionPassManager and add the AddConstPass to it:
+    // Create a FunctionPassManager and add the CFGPrinterBCPass to it:
     FunctionPassManager FPM;
     FPM.addPass(cfgprinterbc::CFGPrinterBCPass(errs()));
 
