@@ -6,6 +6,7 @@ for d in */ ; do
     bench=${d%?}
     
     cd $bench
+    mkdir pdf
     cd dot
     
     for FILE in * ; do
