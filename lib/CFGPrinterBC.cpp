@@ -7,28 +7,28 @@ using namespace llvm;
 
 namespace cfgprinterbc {
 
-// std::string genOpStr(Value *operand) {
-//     if (isa<Function>(operand)) return "@" + operand->getName().str();
+std::string genOpStr(Value *operand) {
+    if (isa<Function>(operand)) return "@" + operand->getName().str();
 
-//     if (isa<BasicBlock>(operand)) return operand->getName().str();
+    if (isa<BasicBlock>(operand)) return operand->getName().str();
 
-//     if (ConstantInt *CI = dyn_cast<ConstantInt>(operand)) return std::to_string(CI->getZExtValue());
+    if (ConstantInt *CI = dyn_cast<ConstantInt>(operand)) return std::to_string(CI->getZExtValue());
 
-//     if (ConstantExpr *CE = dyn_cast<ConstantExpr>(operand)){
-//         std::string rep = " (";
-//         for (int j=0; j < CE->getNumOperands(); j++) {
-//             rep += genOpStr(CE->getOperand(j));
-//         }
-//         return rep + ")";
-//     }
+    if (ConstantExpr *CE = dyn_cast<ConstantExpr>(operand)){
+        std::string rep = " (";
+        for (unsigned int j=0; j < CE->getNumOperands(); j++) {
+            rep += genOpStr(CE->getOperand(j));
+        }
+        return rep + ")";
+    }
 
-//     if (operand->hasName()) return "%" + operand->getName().str();
+    if (operand->hasName()) return "%" + operand->getName().str();
 
-//     return "";
-// }
+    return "";
+}
 
 void CFGPrinterBCPass::printFunctionName(Function &F) {
-    OS << "digraph CFG for " << "'" << F.getName().str() << "'" << " function {" << '\n';
+    OS << "digraph \"CFG for " << "'" << F.getName().str() << "'" << " function\" {" << '\n';
 }
 
 void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB, std::map<std::string, int> labelMap) {
@@ -36,20 +36,7 @@ void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB, std::map<std::string, int
     int counter = 0;
     for (Instruction &I : BB) {
         if (!I.getType()->isVoidTy()) {
-            if (!I.hasName()) {
-                I.setName(std::to_string(counter));
-                counter++;
-                continue;
-            }
-
-            std::string iName = I.getName().str();
-            if (labelMap.find(iName) != labelMap.end()) {
-                I.setName(iName + "." + std::to_string(labelMap[iName]));
-                labelMap[iName] += 1;
-            } else {
-                I.setName(iName + ".0");
-                labelMap[iName] = 1;
-            }
+            I.setName(std::to_string(counter));
         }
     }
 
@@ -60,30 +47,47 @@ void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB, std::map<std::string, int
 }
 
 void CFGPrinterBCPass::printInstruction(Instruction &I) {
-    std::string res = "";
-    
-    // if (!I.getType()->isVoidTy()){
-    //     res += "%" + I.getName().str() + " = ";
-    // }
+    std::string result;
 
-    res += I.getName().str() + " = ";
+    if (!I.getType()->isVoidTy()) {
+        result += "%" + I.getName().str() + " = ";
+    }
 
-    res += I.getOpcodeName();
+    result += I.getOpcodeName();
 
-    // if (PHINode *PN = dyn_cast<PHINode>(&I)) {
-    //     for (int i = 0; i < PN->getNumIncomingValues(); i++) {
-    //         res += std::string(i ? ", " : "") + " [ " + genOpStr(PN->getIncomingValue(i)) + ", " + genOpStr(PN->getIncomingBlock(i)) + " ]";
-    //     }
-    // } else {
-    //     for(Use &operand : I.operands()) {
-    //         res += " " + genOpStr(operand.get());
-    //     }
-    // }
+    if (PHINode *PN = dyn_cast<PHINode>(&I)) {
 
-    // res += "\\l";
-    OS << res << "\n";
-    //OS << I << "\n";
+        for (int i = 0; i < PN->getNumIncomingValues(); i++) {
+            result += std::string(i ? ", " : "");
+            result += " [" + genOpStr(PN->getIncomingValue(i));
+            result += ", " + genOpStr(PN->getIncomingBlock(i)) + " ]";
+        }
 
+        OS << result << "\\l" << "\n";
+        return;
+    }
+	
+    if (I.getOpcode() == Instruction::Call) {
+        result += " " + genOpStr(I.getOperand(I.getNumOperands() - 1));
+        result += "(";
+
+        for (int i = 0; i < I.getNumOperands() - 1; i++) {
+            result += genOpStr(I.getOperand(i));
+                if (i < I.getNumOperands() - 2) {
+                    result += ", ";
+                }
+        }
+
+        result += ")";
+        OS << result << "\\l" << "\n";
+        return;
+    }
+
+    for (int i = I.getNumOperands() - 1; i >= 0; i--) {
+        result += " " + genOpStr(I.getOperand(i));
+    }
+
+    OS << result << "\\l" << "\n";
 }
 
 PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FAM) {
@@ -102,6 +106,8 @@ PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FA
             OS << BB.getName().str() << " -> " << BBSucc->getName().str() << '\n';
         }
     }
+
+    OS << "}\n";
 
     return PreservedAnalyses::all();
 }
