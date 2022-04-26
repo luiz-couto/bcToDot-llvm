@@ -8,8 +8,9 @@ for d in */ ; do
 
     cd $bench
     
-    cd IR
-    llvm-as ${bench}.ll -o ${bench}.bc
+    mkdir dot
+    cd dot
+    ./../../../build/bin/CFGPrinterBC ../IR/${bench}.bc
 
     cd ../..
 

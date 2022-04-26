@@ -118,7 +118,7 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
     }
 
     result += "\\l\n";
-    OS << result;
+    //OS << result;
     dotStr += result;
 }
 

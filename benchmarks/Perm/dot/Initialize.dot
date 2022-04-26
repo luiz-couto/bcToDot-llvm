@@ -1,0 +1,73 @@
+digraph "CFG for 'Initrand' function" {
+BB0 [shape=record, label="{BB0:\l\l
+store 74755 %seed\l
+ret\l
+}"];
+}
+digraph "CFG for 'Rand' function" {
+BB1 [shape=record, label="{BB1:\l\l
+%1 = load %seed\l
+%mul = mul %1 1309\l
+%add = add %mul 13849\l
+%and = and %add 65535\l
+store %and %seed\l
+%2 = load %seed\l
+%conv = trunc %2\l
+ret %conv\l
+}"];
+}
+digraph "CFG for 'Swap' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%a.addr = alloca 1\l
+%b.addr = alloca 1\l
+%t = alloca 1\l
+store %a %a.addr\l
+store %b %b.addr\l
+%1 = load %a.addr\l
+%2 = load %1\l
+store %2 %t\l
+%3 = load %b.addr\l
+%4 = load %3\l
+%5 = load %a.addr\l
+store %4 %5\l
+%6 = load %t\l
+%7 = load %b.addr\l
+store %6 %7\l
+ret\l
+}"];
+}
+digraph "CFG for 'Initialize' function" {
+BB3 [shape=record, label="{BB3:\l\l
+%i = alloca 1\l
+store 1 %i\l
+br BB4\l
+}"];
+BB3 -> BB4
+BB4 [shape=record, label="{BB4:\l\l
+%1 = load %i\l
+%cmp = icmp %1 7\l
+br %cmp BB7 BB5\l
+}"];
+BB4 -> BB5
+BB4 -> BB7
+BB5 [shape=record, label="{BB5:\l\l
+%2 = load %i\l
+%sub = sub %2 1\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %permarray 0 %idxprom\l
+store %sub %arrayidx\l
+br BB6\l
+}"];
+BB5 -> BB6
+BB6 [shape=record, label="{BB6:\l\l
+%4 = load %i\l
+%inc = add %4 1\l
+store %inc %i\l
+br BB4\l
+}"];
+BB6 -> BB4
+BB7 [shape=record, label="{BB7:\l\l
+ret\l
+}"];
+}

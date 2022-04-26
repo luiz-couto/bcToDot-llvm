@@ -1,0 +1,224 @@
+digraph "CFG for 'Initrand' function" {
+BB0 [shape=record, label="{BB0:\l\l
+store 74755 %seed\l
+ret\l
+}"];
+}
+digraph "CFG for 'Rand' function" {
+BB1 [shape=record, label="{BB1:\l\l
+%1 = load %seed\l
+%mul = mul %1 1309\l
+%add = add %mul 13849\l
+%and = and %add 65535\l
+store %and %seed\l
+%2 = load %seed\l
+%conv = trunc %2\l
+ret %conv\l
+}"];
+}
+digraph "CFG for 'Initmatrix' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%m.addr = alloca 1\l
+%temp = alloca 1\l
+%i = alloca 1\l
+%j = alloca 1\l
+store %m %m.addr\l
+store 1 %i\l
+br BB3\l
+}"];
+BB2 -> BB3
+BB3 [shape=record, label="{BB3:\l\l
+%1 = load %i\l
+%cmp = icmp %1 40\l
+br %cmp BB10 BB4\l
+}"];
+BB3 -> BB4
+BB3 -> BB10
+BB4 [shape=record, label="{BB4:\l\l
+store 1 %j\l
+br BB5\l
+}"];
+BB4 -> BB5
+BB5 [shape=record, label="{BB5:\l\l
+%2 = load %j\l
+%cmp2 = icmp %2 40\l
+br %cmp2 BB8 BB6\l
+}"];
+BB5 -> BB6
+BB5 -> BB8
+BB6 [shape=record, label="{BB6:\l\l
+%call = call @Rand()\lstore %call %temp\l
+%3 = load %temp\l
+%4 = load %temp\l
+%div = sdiv %4 120\l
+%mul = mul %div 120\l
+%sub = sub %3 %mul\l
+%sub4 = sub %sub 60\l
+%5 = load %m.addr\l
+%6 = load %i\l
+%idxprom = sext %6\l
+%arrayidx = getelementptr %5 %idxprom\l
+%7 = load %j\l
+%idxprom5 = sext %7\l
+%arrayidx6 = getelementptr %arrayidx 0 %idxprom5\l
+store %sub4 %arrayidx6\l
+br BB7\l
+}"];
+BB6 -> BB7
+BB7 [shape=record, label="{BB7:\l\l
+%8 = load %j\l
+%inc = add %8 1\l
+store %inc %j\l
+br BB5\l
+}"];
+BB7 -> BB5
+BB8 [shape=record, label="{BB8:\l\l
+br BB9\l
+}"];
+BB8 -> BB9
+BB9 [shape=record, label="{BB9:\l\l
+%9 = load %i\l
+%inc8 = add %9 1\l
+store %inc8 %i\l
+br BB3\l
+}"];
+BB9 -> BB3
+BB10 [shape=record, label="{BB10:\l\l
+ret\l
+}"];
+}
+digraph "CFG for 'Innerproduct' function" {
+BB11 [shape=record, label="{BB11:\l\l
+%result.addr = alloca 1\l
+%a.addr = alloca 1\l
+%b.addr = alloca 1\l
+%row.addr = alloca 1\l
+%column.addr = alloca 1\l
+%i = alloca 1\l
+store %result %result.addr\l
+store %a %a.addr\l
+store %b %b.addr\l
+store %row %row.addr\l
+store %column %column.addr\l
+%1 = load %result.addr\l
+store 0 %1\l
+store 1 %i\l
+br BB12\l
+}"];
+BB11 -> BB12
+BB12 [shape=record, label="{BB12:\l\l
+%2 = load %i\l
+%cmp = icmp %2 40\l
+br %cmp BB15 BB13\l
+}"];
+BB12 -> BB13
+BB12 -> BB15
+BB13 [shape=record, label="{BB13:\l\l
+%3 = load %result.addr\l
+%4 = load %3\l
+%5 = load %a.addr\l
+%6 = load %row.addr\l
+%idxprom = sext %6\l
+%arrayidx = getelementptr %5 %idxprom\l
+%7 = load %i\l
+%idxprom1 = sext %7\l
+%arrayidx2 = getelementptr %arrayidx 0 %idxprom1\l
+%8 = load %arrayidx2\l
+%9 = load %b.addr\l
+%10 = load %i\l
+%idxprom3 = sext %10\l
+%arrayidx4 = getelementptr %9 %idxprom3\l
+%11 = load %column.addr\l
+%idxprom5 = sext %11\l
+%arrayidx6 = getelementptr %arrayidx4 0 %idxprom5\l
+%12 = load %arrayidx6\l
+%mul = mul %8 %12\l
+%add = add %4 %mul\l
+%13 = load %result.addr\l
+store %add %13\l
+br BB14\l
+}"];
+BB13 -> BB14
+BB14 [shape=record, label="{BB14:\l\l
+%14 = load %i\l
+%inc = add %14 1\l
+store %inc %i\l
+br BB12\l
+}"];
+BB14 -> BB12
+BB15 [shape=record, label="{BB15:\l\l
+ret\l
+}"];
+}
+digraph "CFG for 'Intmm' function" {
+BB16 [shape=record, label="{BB16:\l\l
+%run.addr = alloca 1\l
+%i = alloca 1\l
+%j = alloca 1\l
+store %run %run.addr\l
+call @Initrand()\lcall @Initmatrix(%ima)\lcall @Initmatrix(%imb)\lstore 1 %i\l
+br BB17\l
+}"];
+BB16 -> BB17
+BB17 [shape=record, label="{BB17:\l\l
+%1 = load %i\l
+%cmp = icmp %1 40\l
+br %cmp BB24 BB18\l
+}"];
+BB17 -> BB18
+BB17 -> BB24
+BB18 [shape=record, label="{BB18:\l\l
+store 1 %j\l
+br BB19\l
+}"];
+BB18 -> BB19
+BB19 [shape=record, label="{BB19:\l\l
+%2 = load %j\l
+%cmp2 = icmp %2 40\l
+br %cmp2 BB22 BB20\l
+}"];
+BB19 -> BB20
+BB19 -> BB22
+BB20 [shape=record, label="{BB20:\l\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %imr 0 %idxprom\l
+%4 = load %j\l
+%idxprom4 = sext %4\l
+%arrayidx5 = getelementptr %arrayidx 0 %idxprom4\l
+%5 = load %i\l
+%6 = load %j\l
+call @Innerproduct(%arrayidx5, %ima, %imb, %5, %6)\lbr BB21\l
+}"];
+BB20 -> BB21
+BB21 [shape=record, label="{BB21:\l\l
+%7 = load %j\l
+%inc = add %7 1\l
+store %inc %j\l
+br BB19\l
+}"];
+BB21 -> BB19
+BB22 [shape=record, label="{BB22:\l\l
+br BB23\l
+}"];
+BB22 -> BB23
+BB23 [shape=record, label="{BB23:\l\l
+%8 = load %i\l
+%inc7 = add %8 1\l
+store %inc7 %i\l
+br BB17\l
+}"];
+BB23 -> BB17
+BB24 [shape=record, label="{BB24:\l\l
+%9 = load %run.addr\l
+%add = add %9 1\l
+%idxprom9 = sext %add\l
+%arrayidx10 = getelementptr %imr 0 %idxprom9\l
+%10 = load %run.addr\l
+%add11 = add %10 1\l
+%idxprom12 = sext %add11\l
+%arrayidx13 = getelementptr %arrayidx10 0 %idxprom12\l
+%11 = load %arrayidx13\l
+%call = call @printf(%.str, %11)\lret\l
+}"];
+}

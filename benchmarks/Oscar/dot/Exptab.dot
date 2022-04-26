@@ -1,0 +1,435 @@
+digraph "CFG for 'Initrand' function" {
+BB0 [shape=record, label="{BB0:\l\l
+store 74755 %seed\l
+ret\l
+}"];
+}
+digraph "CFG for 'Rand' function" {
+BB1 [shape=record, label="{BB1:\l\l
+%1 = load %seed\l
+%mul = mul %1 1309\l
+%add = add %mul 13849\l
+%and = and %add 65535\l
+store %and %seed\l
+%2 = load %seed\l
+%conv = trunc %2\l
+ret %conv\l
+}"];
+}
+digraph "CFG for 'Cos' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%x.addr = alloca 1\l
+%i = alloca 1\l
+%factor = alloca 1\l
+%result = alloca 1\l
+%power = alloca 1\l
+store %x %x.addr\l
+store  %result\l
+store 1 %factor\l
+%1 = load %x.addr\l
+store %1 %power\l
+store 2 %i\l
+br BB3\l
+}"];
+BB2 -> BB3
+BB3 [shape=record, label="{BB3:\l\l
+%2 = load %i\l
+%cmp = icmp %2 10\l
+br %cmp BB11 BB4\l
+}"];
+BB3 -> BB4
+BB3 -> BB11
+BB4 [shape=record, label="{BB4:\l\l
+%3 = load %factor\l
+%4 = load %i\l
+%mul = mul %3 %4\l
+store %mul %factor\l
+%5 = load %power\l
+%6 = load %x.addr\l
+%mul1 = fmul %5 %6\l
+store %mul1 %power\l
+%7 = load %i\l
+%and = and %7 1\l
+%cmp2 = icmp %and 0\l
+br %cmp2 BB9 BB5\l
+}"];
+BB4 -> BB5
+BB4 -> BB9
+BB5 [shape=record, label="{BB5:\l\l
+%8 = load %i\l
+%and3 = and %8 3\l
+%cmp4 = icmp %and3 0\l
+br %cmp4 BB7 BB6\l
+}"];
+BB5 -> BB6
+BB5 -> BB7
+BB6 [shape=record, label="{BB6:\l\l
+%9 = load %result\l
+%10 = load %power\l
+%11 = load %factor\l
+%conv = sitofp %11\l
+%div = fdiv %10 %conv\l
+%add = fadd %9 %div\l
+store %add %result\l
+br BB8\l
+}"];
+BB6 -> BB8
+BB7 [shape=record, label="{BB7:\l\l
+%12 = load %result\l
+%13 = load %power\l
+%14 = load %factor\l
+%conv6 = sitofp %14\l
+%div7 = fdiv %13 %conv6\l
+%sub = fsub %12 %div7\l
+store %sub %result\l
+br BB8\l
+}"];
+BB7 -> BB8
+BB8 [shape=record, label="{BB8:\l\l
+br BB9\l
+}"];
+BB8 -> BB9
+BB9 [shape=record, label="{BB9:\l\l
+br BB10\l
+}"];
+BB9 -> BB10
+BB10 [shape=record, label="{BB10:\l\l
+%15 = load %i\l
+%inc = add %15 1\l
+store %inc %i\l
+br BB3\l
+}"];
+BB10 -> BB3
+BB11 [shape=record, label="{BB11:\l\l
+%16 = load %result\l
+ret %16\l
+}"];
+}
+digraph "CFG for 'Min0' function" {
+BB12 [shape=record, label="{BB12:\l\l
+%retval = alloca 1\l
+%arg1.addr = alloca 1\l
+%arg2.addr = alloca 1\l
+store %arg1 %arg1.addr\l
+store %arg2 %arg2.addr\l
+%1 = load %arg1.addr\l
+%2 = load %arg2.addr\l
+%cmp = icmp %1 %2\l
+br %cmp BB14 BB13\l
+}"];
+BB12 -> BB13
+BB12 -> BB14
+BB13 [shape=record, label="{BB13:\l\l
+%3 = load %arg1.addr\l
+store %3 %retval\l
+br BB15\l
+}"];
+BB13 -> BB15
+BB14 [shape=record, label="{BB14:\l\l
+%4 = load %arg2.addr\l
+store %4 %retval\l
+br BB15\l
+}"];
+BB14 -> BB15
+BB15 [shape=record, label="{BB15:\l\l
+%5 = load %retval\l
+ret %5\l
+}"];
+}
+digraph "CFG for 'Printcomplex' function" {
+BB16 [shape=record, label="{BB16:\l\l
+%zarray.addr = alloca 1\l
+%start.addr = alloca 1\l
+%finish.addr = alloca 1\l
+%increment.addr = alloca 1\l
+%i = alloca 1\l
+store %zarray %zarray.addr\l
+store %start %start.addr\l
+store %finish %finish.addr\l
+store %increment %increment.addr\l
+%call = call @printf(%.str)\l%1 = load %start.addr\l
+store %1 %i\l
+br BB17\l
+}"];
+BB16 -> BB17
+BB17 [shape=record, label="{BB17:\l\l
+%2 = load %zarray.addr\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %2 %idxprom\l
+%rp = getelementptr %arrayidx 0 0\l
+%4 = load %rp\l
+%conv = fpext %4\l
+%5 = load %zarray.addr\l
+%6 = load %i\l
+%idxprom1 = sext %6\l
+%arrayidx2 = getelementptr %5 %idxprom1\l
+%ip = getelementptr %arrayidx2 0 1\l
+%7 = load %ip\l
+%conv3 = fpext %7\l
+%call4 = call @printf(%.str.1, %conv, %conv3)\l%8 = load %i\l
+%9 = load %increment.addr\l
+%add = add %8 %9\l
+store %add %i\l
+%10 = load %zarray.addr\l
+%11 = load %i\l
+%idxprom5 = sext %11\l
+%arrayidx6 = getelementptr %10 %idxprom5\l
+%rp7 = getelementptr %arrayidx6 0 0\l
+%12 = load %rp7\l
+%conv8 = fpext %12\l
+%13 = load %zarray.addr\l
+%14 = load %i\l
+%idxprom9 = sext %14\l
+%arrayidx10 = getelementptr %13 %idxprom9\l
+%ip11 = getelementptr %arrayidx10 0 1\l
+%15 = load %ip11\l
+%conv12 = fpext %15\l
+%call13 = call @printf(%.str.1, %conv8, %conv12)\l%call14 = call @printf(%.str)\l%16 = load %i\l
+%17 = load %increment.addr\l
+%add15 = add %16 %17\l
+store %add15 %i\l
+br BB18\l
+}"];
+BB17 -> BB18
+BB18 [shape=record, label="{BB18:\l\l
+%18 = load %i\l
+%19 = load %finish.addr\l
+%cmp = icmp %18 %19\l
+br %cmp BB19 BB17\l
+}"];
+BB18 -> BB17
+BB18 -> BB19
+BB19 [shape=record, label="{BB19:\l\l
+ret\l
+}"];
+}
+digraph "CFG for 'printf' function" {
+}
+digraph "CFG for 'Uniform11' function" {
+BB20 [shape=record, label="{BB20:\l\l
+%iy.addr = alloca 1\l
+%yfl.addr = alloca 1\l
+store %iy %iy.addr\l
+store %yfl %yfl.addr\l
+%1 = load %iy.addr\l
+%2 = load %1\l
+%mul = mul 4855 %2\l
+%add = add %mul 1731\l
+%and = and %add 8191\l
+%3 = load %iy.addr\l
+store %and %3\l
+%4 = load %iy.addr\l
+%5 = load %4\l
+%conv = sitofp %5\l
+%div = fdiv %conv \l
+%6 = load %yfl.addr\l
+store %div %6\l
+ret\l
+}"];
+}
+digraph "CFG for 'Exptab' function" {
+BB21 [shape=record, label="{BB21:\l\l
+%n.addr = alloca 1\l
+%e.addr = alloca 1\l
+%theta = alloca 1\l
+%divisor = alloca 1\l
+%h = alloca 1\l
+%i = alloca 1\l
+%j = alloca 1\l
+%k = alloca 1\l
+%l = alloca 1\l
+%m = alloca 1\l
+store %n %n.addr\l
+store %e %e.addr\l
+store  %theta\l
+store  %divisor\l
+store 1 %i\l
+br BB22\l
+}"];
+BB21 -> BB22
+BB22 [shape=record, label="{BB22:\l\l
+%1 = load %i\l
+%cmp = icmp %1 25\l
+br %cmp BB25 BB23\l
+}"];
+BB22 -> BB23
+BB22 -> BB25
+BB23 [shape=record, label="{BB23:\l\l
+%2 = load %theta\l
+%3 = load %divisor\l
+%div = fdiv %2 %3\l
+%call = call @Cos(%div)\l%mul = fmul  %call\l
+%div1 = fdiv  %mul\l
+%4 = load %i\l
+%idxprom = sext %4\l
+%arrayidx = getelementptr %h 0 %idxprom\l
+store %div1 %arrayidx\l
+%5 = load %divisor\l
+%6 = load %divisor\l
+%add = fadd %5 %6\l
+store %add %divisor\l
+br BB24\l
+}"];
+BB23 -> BB24
+BB24 [shape=record, label="{BB24:\l\l
+%7 = load %i\l
+%inc = add %7 1\l
+store %inc %i\l
+br BB22\l
+}"];
+BB24 -> BB22
+BB25 [shape=record, label="{BB25:\l\l
+%8 = load %n.addr\l
+%div2 = sdiv %8 2\l
+store %div2 %m\l
+%9 = load %m\l
+%div3 = sdiv %9 2\l
+store %div3 %l\l
+store 1 %j\l
+%10 = load %e.addr\l
+%arrayidx4 = getelementptr %10 1\l
+%rp = getelementptr %arrayidx4 0 0\l
+store  %rp\l
+%11 = load %e.addr\l
+%arrayidx5 = getelementptr %11 1\l
+%ip = getelementptr %arrayidx5 0 1\l
+store  %ip\l
+%12 = load %e.addr\l
+%13 = load %l\l
+%add6 = add %13 1\l
+%idxprom7 = sext %add6\l
+%arrayidx8 = getelementptr %12 %idxprom7\l
+%rp9 = getelementptr %arrayidx8 0 0\l
+store  %rp9\l
+%14 = load %e.addr\l
+%15 = load %l\l
+%add10 = add %15 1\l
+%idxprom11 = sext %add10\l
+%arrayidx12 = getelementptr %14 %idxprom11\l
+%ip13 = getelementptr %arrayidx12 0 1\l
+store  %ip13\l
+%16 = load %e.addr\l
+%17 = load %m\l
+%add14 = add %17 1\l
+%idxprom15 = sext %add14\l
+%arrayidx16 = getelementptr %16 %idxprom15\l
+%rp17 = getelementptr %arrayidx16 0 0\l
+store  %rp17\l
+%18 = load %e.addr\l
+%19 = load %m\l
+%add18 = add %19 1\l
+%idxprom19 = sext %add18\l
+%arrayidx20 = getelementptr %18 %idxprom19\l
+%ip21 = getelementptr %arrayidx20 0 1\l
+store  %ip21\l
+br BB26\l
+}"];
+BB25 -> BB26
+BB26 [shape=record, label="{BB26:\l\l
+%20 = load %l\l
+%div22 = sdiv %20 2\l
+store %div22 %i\l
+%21 = load %i\l
+store %21 %k\l
+br BB27\l
+}"];
+BB26 -> BB27
+BB27 [shape=record, label="{BB27:\l\l
+%22 = load %j\l
+%idxprom24 = sext %22\l
+%arrayidx25 = getelementptr %h 0 %idxprom24\l
+%23 = load %arrayidx25\l
+%24 = load %e.addr\l
+%25 = load %k\l
+%26 = load %i\l
+%add26 = add %25 %26\l
+%add27 = add %add26 1\l
+%idxprom28 = sext %add27\l
+%arrayidx29 = getelementptr %24 %idxprom28\l
+%rp30 = getelementptr %arrayidx29 0 0\l
+%27 = load %rp30\l
+%28 = load %e.addr\l
+%29 = load %k\l
+%30 = load %i\l
+%sub = sub %29 %30\l
+%add31 = add %sub 1\l
+%idxprom32 = sext %add31\l
+%arrayidx33 = getelementptr %28 %idxprom32\l
+%rp34 = getelementptr %arrayidx33 0 0\l
+%31 = load %rp34\l
+%add35 = fadd %27 %31\l
+%mul36 = fmul %23 %add35\l
+%32 = load %e.addr\l
+%33 = load %k\l
+%add37 = add %33 1\l
+%idxprom38 = sext %add37\l
+%arrayidx39 = getelementptr %32 %idxprom38\l
+%rp40 = getelementptr %arrayidx39 0 0\l
+store %mul36 %rp40\l
+%34 = load %j\l
+%idxprom41 = sext %34\l
+%arrayidx42 = getelementptr %h 0 %idxprom41\l
+%35 = load %arrayidx42\l
+%36 = load %e.addr\l
+%37 = load %k\l
+%38 = load %i\l
+%add43 = add %37 %38\l
+%add44 = add %add43 1\l
+%idxprom45 = sext %add44\l
+%arrayidx46 = getelementptr %36 %idxprom45\l
+%ip47 = getelementptr %arrayidx46 0 1\l
+%39 = load %ip47\l
+%40 = load %e.addr\l
+%41 = load %k\l
+%42 = load %i\l
+%sub48 = sub %41 %42\l
+%add49 = add %sub48 1\l
+%idxprom50 = sext %add49\l
+%arrayidx51 = getelementptr %40 %idxprom50\l
+%ip52 = getelementptr %arrayidx51 0 1\l
+%43 = load %ip52\l
+%add53 = fadd %39 %43\l
+%mul54 = fmul %35 %add53\l
+%44 = load %e.addr\l
+%45 = load %k\l
+%add55 = add %45 1\l
+%idxprom56 = sext %add55\l
+%arrayidx57 = getelementptr %44 %idxprom56\l
+%ip58 = getelementptr %arrayidx57 0 1\l
+store %mul54 %ip58\l
+%46 = load %k\l
+%47 = load %l\l
+%add59 = add %46 %47\l
+store %add59 %k\l
+br BB28\l
+}"];
+BB27 -> BB28
+BB28 [shape=record, label="{BB28:\l\l
+%48 = load %k\l
+%49 = load %m\l
+%cmp60 = icmp %48 %49\l
+br %cmp60 BB29 BB27\l
+}"];
+BB28 -> BB27
+BB28 -> BB29
+BB29 [shape=record, label="{BB29:\l\l
+%50 = load %j\l
+%add61 = add %50 1\l
+%call62 = call @Min0(%add61, 25)\lstore %call62 %j\l
+%51 = load %i\l
+store %51 %l\l
+br BB30\l
+}"];
+BB29 -> BB30
+BB30 [shape=record, label="{BB30:\l\l
+%52 = load %l\l
+%cmp64 = icmp %52 1\l
+br %cmp64 BB31 BB26\l
+}"];
+BB30 -> BB26
+BB30 -> BB31
+BB31 [shape=record, label="{BB31:\l\l
+ret\l
+}"];
+}

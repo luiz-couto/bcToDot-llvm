@@ -1,0 +1,96 @@
+digraph "CFG for 'Initrand' function" {
+BB0 [shape=record, label="{BB0:\l\l
+store 74755 %seed\l
+ret\l
+}"];
+}
+digraph "CFG for 'Rand' function" {
+BB1 [shape=record, label="{BB1:\l\l
+%1 = load %seed\l
+%mul = mul %1 1309\l
+%add = add %mul 13849\l
+%and = and %add 65535\l
+store %and %seed\l
+%2 = load %seed\l
+%conv = trunc %2\l
+ret %conv\l
+}"];
+}
+digraph "CFG for 'Fit' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%retval = alloca 1\l
+%i.addr = alloca 1\l
+%j.addr = alloca 1\l
+%k = alloca 1\l
+store %i %i.addr\l
+store %j %j.addr\l
+store 0 %k\l
+br BB3\l
+}"];
+BB2 -> BB3
+BB3 [shape=record, label="{BB3:\l\l
+%1 = load %k\l
+%2 = load %i.addr\l
+%idxprom = sext %2\l
+%arrayidx = getelementptr %piecemax 0 %idxprom\l
+%3 = load %arrayidx\l
+%cmp = icmp %1 %3\l
+br %cmp BB10 BB4\l
+}"];
+BB3 -> BB4
+BB3 -> BB10
+BB4 [shape=record, label="{BB4:\l\l
+%4 = load %i.addr\l
+%idxprom1 = sext %4\l
+%arrayidx2 = getelementptr %p 0 %idxprom1\l
+%5 = load %k\l
+%idxprom3 = sext %5\l
+%arrayidx4 = getelementptr %arrayidx2 0 %idxprom3\l
+%6 = load %arrayidx4\l
+%tobool = icmp %6 0\l
+br %tobool BB8 BB5\l
+}"];
+BB4 -> BB5
+BB4 -> BB8
+BB5 [shape=record, label="{BB5:\l\l
+%7 = load %j.addr\l
+%8 = load %k\l
+%add = add %7 %8\l
+%idxprom5 = sext %add\l
+%arrayidx6 = getelementptr %puzzl 0 %idxprom5\l
+%9 = load %arrayidx6\l
+%tobool7 = icmp %9 0\l
+br %tobool7 BB7 BB6\l
+}"];
+BB5 -> BB6
+BB5 -> BB7
+BB6 [shape=record, label="{BB6:\l\l
+store 0 %retval\l
+br BB11\l
+}"];
+BB6 -> BB11
+BB7 [shape=record, label="{BB7:\l\l
+br BB8\l
+}"];
+BB7 -> BB8
+BB8 [shape=record, label="{BB8:\l\l
+br BB9\l
+}"];
+BB8 -> BB9
+BB9 [shape=record, label="{BB9:\l\l
+%10 = load %k\l
+%inc = add %10 1\l
+store %inc %k\l
+br BB3\l
+}"];
+BB9 -> BB3
+BB10 [shape=record, label="{BB10:\l\l
+store 1 %retval\l
+br BB11\l
+}"];
+BB10 -> BB11
+BB11 [shape=record, label="{BB11:\l\l
+%11 = load %retval\l
+ret %11\l
+}"];
+}

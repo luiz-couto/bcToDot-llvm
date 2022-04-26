@@ -1,0 +1,39 @@
+digraph "CFG for 'Initrand' function" {
+BB0 [shape=record, label="{BB0:\l\l
+store 74755 %seed\l
+ret\l
+}"];
+}
+digraph "CFG for 'Rand' function" {
+BB1 [shape=record, label="{BB1:\l\l
+%1 = load %seed\l
+%mul = mul %1 1309\l
+%add = add %mul 13849\l
+%and = and %add 65535\l
+store %and %seed\l
+%2 = load %seed\l
+%conv = trunc %2\l
+ret %conv\l
+}"];
+}
+digraph "CFG for 'Error' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%emsg.addr = alloca 1\l
+store %emsg %emsg.addr\l
+%1 = load %emsg.addr\l
+%call = call @printf(%.str, %1)\lret\l
+}"];
+}
+digraph "CFG for 'printf' function" {
+}
+digraph "CFG for 'Makenull' function" {
+BB3 [shape=record, label="{BB3:\l\l
+%s.addr = alloca 1\l
+store %s %s.addr\l
+%1 = load %s.addr\l
+%idxprom = sext %1\l
+%arrayidx = getelementptr %stack 0 %idxprom\l
+store 0 %arrayidx\l
+ret\l
+}"];
+}
