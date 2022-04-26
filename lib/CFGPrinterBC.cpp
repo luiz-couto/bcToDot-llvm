@@ -28,13 +28,13 @@ std::string genOpStr(Value *operand) {
 }
 
 void CFGPrinterBCPass::printFunctionName(Function &F) {
-    OS << "digraph \"CFG for " << "'" << F.getName().str() << "'" << " function\" {" << '\n';
+    //OS << "digraph \"CFG for " << "'" << F.getName().str() << "'" << " function\" {" << '\n';
     dotStr = dotStr + "digraph \"CFG for " + "'" + F.getName().str() + "'" + " function\" {" + '\n';
 }
 
 void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB) {
     std::string res = BB.getName().str() + " [shape=record, label=\"{" + BB.getName().str() + ":\\l\\l\n";
-    OS << res;
+    //OS << res;
     dotStr += res;
 
     int counter = 0;
@@ -47,7 +47,7 @@ void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB) {
     for (Instruction &I : BB) {
         printInstruction(I);
     }
-    OS << "}\"];\n";
+    //OS << "}\"];\n";
     dotStr += "}\"];\n";
 }
 
@@ -69,7 +69,7 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
         }
 
         result += "\\l\n";
-        OS << result;
+        //OS << result;
         dotStr += result;
         return;
     }
@@ -86,7 +86,7 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
         }
 
         result += ")\\l\n";
-        OS << result;
+        //OS << result;
         dotStr += result;
         return;
     }
@@ -96,7 +96,7 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
     }
 
     result += "\\l\n";
-    OS << result;
+    //OS << result;
     dotStr += result;
 }
 
@@ -124,12 +124,12 @@ PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FA
     for (BasicBlock &BB : F) {
         for (BasicBlock *BBSucc : successors(&BB)) {
             std::string res = BB.getName().str() + " -> " + BBSucc->getName().str() + '\n';
-            OS << res;
+            //OS << res;
             dotStr += res;
         }
     }
 
-    OS << "}\n";
+    //OS << "}\n";
     dotStr += "}\n";
 
     writeFile("teste.dot", dotStr);
