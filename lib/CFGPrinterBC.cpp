@@ -95,30 +95,30 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
         dotStr += result;
         return;
     }
-	
+
     if (I.getOpcode() == Instruction::Call) {
         result += " " + genOpStr(I.getOperand(I.getNumOperands() - 1));
         result += "(";
 
-        for (unsigned int i = 0; i < I.getNumOperands() - 1; i++) {
+        for (unsigned int i = 0; i < I.getNumOperands() - 1; ++i) {
             result += genOpStr(I.getOperand(i));
-                if (i < I.getNumOperands() - 2) {
-                    result += ", ";
-                }
+            if (i < I.getNumOperands() - 2) {
+                result += ", ";
+            }
         }
-
-        result += ")\\l\n";
+        
+        result += ")\\l";
         //OS << result;
         dotStr += result;
         return;
     }
 
-    for (int i = I.getNumOperands() - 1; i >= 0; i--) {
+    for (unsigned int i = 0; i < I.getNumOperands(); i++) {
         result += " " + genOpStr(I.getOperand(i));
     }
 
     result += "\\l\n";
-    //OS << result;
+    OS << result;
     dotStr += result;
 }
 
