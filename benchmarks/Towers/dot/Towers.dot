@@ -1,0 +1,50 @@
+digraph "CFG for 'Towers' function" {
+BB30 [shape=record, label="{BB30:\l\l
+%i = alloca 1\l
+store 1 %i\l
+br BB31\l
+}"];
+BB30 -> BB31
+BB31 [shape=record, label="{BB31:\l\l
+%1 = load %i\l
+%cmp = icmp %1 18\l
+br %cmp BB34 BB32\l
+}"];
+BB31 -> BB32
+BB31 -> BB34
+BB32 [shape=record, label="{BB32:\l\l
+%2 = load %i\l
+%sub = sub %2 1\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %cellspace 0 %idxprom\l
+%next = getelementptr %arrayidx 0 1\l
+store %sub %next\l
+br BB33\l
+}"];
+BB32 -> BB33
+BB33 [shape=record, label="{BB33:\l\l
+%4 = load %i\l
+%inc = add %4 1\l
+store %inc %i\l
+br BB31\l
+}"];
+BB33 -> BB31
+BB34 [shape=record, label="{BB34:\l\l
+store 18 %freelist\l
+call @Init(1, 14)\lcall @Makenull(2)\lcall @Makenull(3)\lstore 0 %movesdone\l
+call @tower(1, 2, 14)\l%5 = load %movesdone\l
+%cmp1 = icmp %5 16383\l
+br %cmp1 BB36 BB35\l
+}"];
+BB34 -> BB35
+BB34 -> BB36
+BB35 [shape=record, label="{BB35:\l\l
+%call = call @printf(%.str.4)\lbr BB36\l
+}"];
+BB35 -> BB36
+BB36 [shape=record, label="{BB36:\l\l
+%6 = load %movesdone\l
+%call2 = call @printf(%.str.5, %6)\lret\l
+}"];
+}

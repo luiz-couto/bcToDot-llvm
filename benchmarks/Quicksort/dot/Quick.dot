@@ -1,0 +1,32 @@
+digraph "CFG for 'Quick' function" {
+BB28 [shape=record, label="{BB28:\l\l
+%run.addr = alloca 1\l
+store %run %run.addr\l
+call @Initarr()\lcall @Quicksort(%sortlist, 1, 5000)\l%1 = load  (%sortlist01)\l
+%2 = load %littlest\l
+%cmp = icmp %1 %2\l
+br %cmp BB29 BB30\l
+}"];
+BB28 -> BB30
+BB28 -> BB29
+BB29 [shape=record, label="{BB29:\l\l
+%3 = load  (%sortlist05000)\l
+%4 = load %biggest\l
+%cmp1 = icmp %3 %4\l
+br %cmp1 BB31 BB30\l
+}"];
+BB29 -> BB30
+BB29 -> BB31
+BB30 [shape=record, label="{BB30:\l\l
+%call = call @printf(%.str)\lbr BB31\l
+}"];
+BB30 -> BB31
+BB31 [shape=record, label="{BB31:\l\l
+%5 = load %run.addr\l
+%add = add %5 1\l
+%idxprom = sext %add\l
+%arrayidx = getelementptr %sortlist 0 %idxprom\l
+%6 = load %arrayidx\l
+%call2 = call @printf(%.str.1, %6)\lret\l
+}"];
+}

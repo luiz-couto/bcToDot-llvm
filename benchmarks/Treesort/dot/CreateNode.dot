@@ -1,0 +1,24 @@
+digraph "CFG for 'CreateNode' function" {
+BB12 [shape=record, label="{BB12:\l\l
+%t.addr = alloca 1\l
+%n.addr = alloca 1\l
+store %t %t.addr\l
+store %n %n.addr\l
+%call = call @malloc(24)\l%1 = load %t.addr\l
+store %call %1\l
+%2 = load %t.addr\l
+%3 = load %2\l
+%left = getelementptr %3 0 0\l
+store  %left\l
+%4 = load %t.addr\l
+%5 = load %4\l
+%right = getelementptr %5 0 1\l
+store  %right\l
+%6 = load %n.addr\l
+%7 = load %t.addr\l
+%8 = load %7\l
+%val = getelementptr %8 0 2\l
+store %6 %val\l
+ret\l
+}"];
+}

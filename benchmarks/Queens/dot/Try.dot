@@ -1,0 +1,178 @@
+digraph "CFG for 'Try' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%i.addr = alloca 1\l
+%q.addr = alloca 1\l
+%a.addr = alloca 1\l
+%b.addr = alloca 1\l
+%c.addr = alloca 1\l
+%x.addr = alloca 1\l
+%j = alloca 1\l
+store %i %i.addr\l
+store %q %q.addr\l
+store %a %a.addr\l
+store %b %b.addr\l
+store %c %c.addr\l
+store %x %x.addr\l
+store 0 %j\l
+%1 = load %q.addr\l
+store 0 %1\l
+br BB3\l
+}"];
+BB2 -> BB3
+BB3 [shape=record, label="{BB3:\l\l
+%2 = load %q.addr\l
+%3 = load %2\l
+%tobool = icmp %3 0\l
+br %tobool BB4 BB5\l
+}"];
+BB3 -> BB5
+BB3 -> BB4
+BB4 [shape=record, label="{BB4:\l\l
+%4 = load %j\l
+%cmp = icmp %4 8\l
+br BB5\l
+}"];
+BB4 -> BB5
+BB5 [shape=record, label="{BB5:\l\l
+%5 = phi [0, BB3 ],  [%cmp, BB4 ]\l
+br %5 BB16 BB6\l
+}"];
+BB5 -> BB6
+BB5 -> BB16
+BB6 [shape=record, label="{BB6:\l\l
+%6 = load %j\l
+%add = add %6 1\l
+store %add %j\l
+%7 = load %q.addr\l
+store 0 %7\l
+%8 = load %b.addr\l
+%9 = load %j\l
+%idxprom = sext %9\l
+%arrayidx = getelementptr %8 %idxprom\l
+%10 = load %arrayidx\l
+%tobool1 = icmp %10 0\l
+br %tobool1 BB15 BB7\l
+}"];
+BB6 -> BB7
+BB6 -> BB15
+BB7 [shape=record, label="{BB7:\l\l
+%11 = load %a.addr\l
+%12 = load %i.addr\l
+%13 = load %j\l
+%add2 = add %12 %13\l
+%idxprom3 = sext %add2\l
+%arrayidx4 = getelementptr %11 %idxprom3\l
+%14 = load %arrayidx4\l
+%tobool5 = icmp %14 0\l
+br %tobool5 BB15 BB8\l
+}"];
+BB7 -> BB8
+BB7 -> BB15
+BB8 [shape=record, label="{BB8:\l\l
+%15 = load %c.addr\l
+%16 = load %i.addr\l
+%17 = load %j\l
+%sub = sub %16 %17\l
+%add7 = add %sub 7\l
+%idxprom8 = sext %add7\l
+%arrayidx9 = getelementptr %15 %idxprom8\l
+%18 = load %arrayidx9\l
+%tobool10 = icmp %18 0\l
+br %tobool10 BB15 BB9\l
+}"];
+BB8 -> BB9
+BB8 -> BB15
+BB9 [shape=record, label="{BB9:\l\l
+%19 = load %j\l
+%20 = load %x.addr\l
+%21 = load %i.addr\l
+%idxprom11 = sext %21\l
+%arrayidx12 = getelementptr %20 %idxprom11\l
+store %19 %arrayidx12\l
+%22 = load %b.addr\l
+%23 = load %j\l
+%idxprom13 = sext %23\l
+%arrayidx14 = getelementptr %22 %idxprom13\l
+store 0 %arrayidx14\l
+%24 = load %a.addr\l
+%25 = load %i.addr\l
+%26 = load %j\l
+%add15 = add %25 %26\l
+%idxprom16 = sext %add15\l
+%arrayidx17 = getelementptr %24 %idxprom16\l
+store 0 %arrayidx17\l
+%27 = load %c.addr\l
+%28 = load %i.addr\l
+%29 = load %j\l
+%sub18 = sub %28 %29\l
+%add19 = add %sub18 7\l
+%idxprom20 = sext %add19\l
+%arrayidx21 = getelementptr %27 %idxprom20\l
+store 0 %arrayidx21\l
+%30 = load %i.addr\l
+%cmp22 = icmp %30 8\l
+br %cmp22 BB13 BB10\l
+}"];
+BB9 -> BB10
+BB9 -> BB13
+BB10 [shape=record, label="{BB10:\l\l
+%31 = load %i.addr\l
+%add24 = add %31 1\l
+%32 = load %q.addr\l
+%33 = load %a.addr\l
+%34 = load %b.addr\l
+%35 = load %c.addr\l
+%36 = load %x.addr\l
+call @Try(%add24, %32, %33, %34, %35, %36)\l%37 = load %q.addr\l
+%38 = load %37\l
+%tobool25 = icmp %38 0\l
+br %tobool25 BB11 BB12\l
+}"];
+BB10 -> BB12
+BB10 -> BB11
+BB11 [shape=record, label="{BB11:\l\l
+%39 = load %b.addr\l
+%40 = load %j\l
+%idxprom27 = sext %40\l
+%arrayidx28 = getelementptr %39 %idxprom27\l
+store 1 %arrayidx28\l
+%41 = load %a.addr\l
+%42 = load %i.addr\l
+%43 = load %j\l
+%add29 = add %42 %43\l
+%idxprom30 = sext %add29\l
+%arrayidx31 = getelementptr %41 %idxprom30\l
+store 1 %arrayidx31\l
+%44 = load %c.addr\l
+%45 = load %i.addr\l
+%46 = load %j\l
+%sub32 = sub %45 %46\l
+%add33 = add %sub32 7\l
+%idxprom34 = sext %add33\l
+%arrayidx35 = getelementptr %44 %idxprom34\l
+store 1 %arrayidx35\l
+br BB12\l
+}"];
+BB11 -> BB12
+BB12 [shape=record, label="{BB12:\l\l
+br BB14\l
+}"];
+BB12 -> BB14
+BB13 [shape=record, label="{BB13:\l\l
+%47 = load %q.addr\l
+store 1 %47\l
+br BB14\l
+}"];
+BB13 -> BB14
+BB14 [shape=record, label="{BB14:\l\l
+br BB15\l
+}"];
+BB14 -> BB15
+BB15 [shape=record, label="{BB15:\l\l
+br BB3\l
+}"];
+BB15 -> BB3
+BB16 [shape=record, label="{BB16:\l\l
+ret\l
+}"];
+}

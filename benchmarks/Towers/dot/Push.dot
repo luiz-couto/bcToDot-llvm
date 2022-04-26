@@ -1,0 +1,78 @@
+digraph "CFG for 'Push' function" {
+BB8 [shape=record, label="{BB8:\l\l
+%i.addr = alloca 1\l
+%s.addr = alloca 1\l
+%errorfound = alloca 1\l
+%localel = alloca 1\l
+store %i %i.addr\l
+store %s %s.addr\l
+store 0 %errorfound\l
+%1 = load %s.addr\l
+%idxprom = sext %1\l
+%arrayidx = getelementptr %stack 0 %idxprom\l
+%2 = load %arrayidx\l
+%cmp = icmp %2 0\l
+br %cmp BB12 BB9\l
+}"];
+BB8 -> BB9
+BB8 -> BB12
+BB9 [shape=record, label="{BB9:\l\l
+%3 = load %s.addr\l
+%idxprom1 = sext %3\l
+%arrayidx2 = getelementptr %stack 0 %idxprom1\l
+%4 = load %arrayidx2\l
+%idxprom3 = sext %4\l
+%arrayidx4 = getelementptr %cellspace 0 %idxprom3\l
+%discsize = getelementptr %arrayidx4 0 0\l
+%5 = load %discsize\l
+%6 = load %i.addr\l
+%cmp5 = icmp %5 %6\l
+br %cmp5 BB11 BB10\l
+}"];
+BB9 -> BB10
+BB9 -> BB11
+BB10 [shape=record, label="{BB10:\l\l
+store 1 %errorfound\l
+call @Error(%.str.2)\lbr BB11\l
+}"];
+BB10 -> BB11
+BB11 [shape=record, label="{BB11:\l\l
+br BB12\l
+}"];
+BB11 -> BB12
+BB12 [shape=record, label="{BB12:\l\l
+%7 = load %errorfound\l
+%tobool = icmp %7 0\l
+br %tobool BB13 BB14\l
+}"];
+BB12 -> BB14
+BB12 -> BB13
+BB13 [shape=record, label="{BB13:\l\l
+%call = call @Getelement()\lstore %call %localel\l
+%8 = load %s.addr\l
+%idxprom9 = sext %8\l
+%arrayidx10 = getelementptr %stack 0 %idxprom9\l
+%9 = load %arrayidx10\l
+%10 = load %localel\l
+%idxprom11 = sext %10\l
+%arrayidx12 = getelementptr %cellspace 0 %idxprom11\l
+%next = getelementptr %arrayidx12 0 1\l
+store %9 %next\l
+%11 = load %localel\l
+%12 = load %s.addr\l
+%idxprom13 = sext %12\l
+%arrayidx14 = getelementptr %stack 0 %idxprom13\l
+store %11 %arrayidx14\l
+%13 = load %i.addr\l
+%14 = load %localel\l
+%idxprom15 = sext %14\l
+%arrayidx16 = getelementptr %cellspace 0 %idxprom15\l
+%discsize17 = getelementptr %arrayidx16 0 0\l
+store %13 %discsize17\l
+br BB14\l
+}"];
+BB13 -> BB14
+BB14 [shape=record, label="{BB14:\l\l
+ret\l
+}"];
+}

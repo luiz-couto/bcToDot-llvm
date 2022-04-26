@@ -1,0 +1,35 @@
+digraph "CFG for 'Initialize' function" {
+BB3 [shape=record, label="{BB3:\l\l
+%i = alloca 1\l
+store 1 %i\l
+br BB4\l
+}"];
+BB3 -> BB4
+BB4 [shape=record, label="{BB4:\l\l
+%1 = load %i\l
+%cmp = icmp %1 7\l
+br %cmp BB7 BB5\l
+}"];
+BB4 -> BB5
+BB4 -> BB7
+BB5 [shape=record, label="{BB5:\l\l
+%2 = load %i\l
+%sub = sub %2 1\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %permarray 0 %idxprom\l
+store %sub %arrayidx\l
+br BB6\l
+}"];
+BB5 -> BB6
+BB6 [shape=record, label="{BB6:\l\l
+%4 = load %i\l
+%inc = add %4 1\l
+store %inc %i\l
+br BB4\l
+}"];
+BB6 -> BB4
+BB7 [shape=record, label="{BB7:\l\l
+ret\l
+}"];
+}

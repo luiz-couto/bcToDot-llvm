@@ -1,0 +1,75 @@
+digraph "CFG for 'Oscar' function" {
+BB49 [shape=record, label="{BB49:\l\l
+%i = alloca 1\l
+%s = alloca 1\l
+call @Exptab(256, %e)\lstore 5767 %seed\l
+store 1 %i\l
+br BB50\l
+}"];
+BB49 -> BB50
+BB50 [shape=record, label="{BB50:\l\l
+%1 = load %i\l
+%cmp = icmp %1 256\l
+br %cmp BB53 BB51\l
+}"];
+BB50 -> BB51
+BB50 -> BB53
+BB51 [shape=record, label="{BB51:\l\l
+%2 = load %seed\l
+%conv = trunc %2\l
+store %conv %s\l
+call @Uniform11(%s, %zr)\l%3 = load %s\l
+%conv1 = sext %3\l
+store %conv1 %seed\l
+call @Uniform11(%s, %zi)\l%4 = load %s\l
+%conv2 = sext %4\l
+store %conv2 %seed\l
+%5 = load %zr\l
+%6 = call @llvm.fmuladd.f32(, %5, )\l%7 = load %i\l
+%idxprom = sext %7\l
+%arrayidx = getelementptr %z 0 %idxprom\l
+%rp = getelementptr %arrayidx 0 0\l
+store %6 %rp\l
+%8 = load %zi\l
+%9 = call @llvm.fmuladd.f32(, %8, )\l%10 = load %i\l
+%idxprom3 = sext %10\l
+%arrayidx4 = getelementptr %z 0 %idxprom3\l
+%ip = getelementptr %arrayidx4 0 1\l
+store %9 %ip\l
+br BB52\l
+}"];
+BB51 -> BB52
+BB52 [shape=record, label="{BB52:\l\l
+%11 = load %i\l
+%inc = add %11 1\l
+store %inc %i\l
+br BB50\l
+}"];
+BB52 -> BB50
+BB53 [shape=record, label="{BB53:\l\l
+store 1 %i\l
+br BB54\l
+}"];
+BB53 -> BB54
+BB54 [shape=record, label="{BB54:\l\l
+%12 = load %i\l
+%cmp6 = icmp %12 20\l
+br %cmp6 BB57 BB55\l
+}"];
+BB54 -> BB55
+BB54 -> BB57
+BB55 [shape=record, label="{BB55:\l\l
+call @Fft(256, %z, %w, %e, )\lbr BB56\l
+}"];
+BB55 -> BB56
+BB56 [shape=record, label="{BB56:\l\l
+%13 = load %i\l
+%inc10 = add %13 1\l
+store %inc10 %i\l
+br BB54\l
+}"];
+BB56 -> BB54
+BB57 [shape=record, label="{BB57:\l\l
+call @Printcomplex(%z, 1, 256, 17)\lret\l
+}"];
+}

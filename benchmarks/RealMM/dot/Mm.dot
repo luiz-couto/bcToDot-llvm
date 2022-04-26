@@ -1,0 +1,72 @@
+digraph "CFG for 'Mm' function" {
+BB16 [shape=record, label="{BB16:\l\l
+%run.addr = alloca 1\l
+%i = alloca 1\l
+%j = alloca 1\l
+store %run %run.addr\l
+call @Initrand()\lcall @rInitmatrix(%rma)\lcall @rInitmatrix(%rmb)\lstore 1 %i\l
+br BB17\l
+}"];
+BB16 -> BB17
+BB17 [shape=record, label="{BB17:\l\l
+%1 = load %i\l
+%cmp = icmp %1 40\l
+br %cmp BB24 BB18\l
+}"];
+BB17 -> BB18
+BB17 -> BB24
+BB18 [shape=record, label="{BB18:\l\l
+store 1 %j\l
+br BB19\l
+}"];
+BB18 -> BB19
+BB19 [shape=record, label="{BB19:\l\l
+%2 = load %j\l
+%cmp2 = icmp %2 40\l
+br %cmp2 BB22 BB20\l
+}"];
+BB19 -> BB20
+BB19 -> BB22
+BB20 [shape=record, label="{BB20:\l\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %rmr 0 %idxprom\l
+%4 = load %j\l
+%idxprom4 = sext %4\l
+%arrayidx5 = getelementptr %arrayidx 0 %idxprom4\l
+%5 = load %i\l
+%6 = load %j\l
+call @rInnerproduct(%arrayidx5, %rma, %rmb, %5, %6)\lbr BB21\l
+}"];
+BB20 -> BB21
+BB21 [shape=record, label="{BB21:\l\l
+%7 = load %j\l
+%inc = add %7 1\l
+store %inc %j\l
+br BB19\l
+}"];
+BB21 -> BB19
+BB22 [shape=record, label="{BB22:\l\l
+br BB23\l
+}"];
+BB22 -> BB23
+BB23 [shape=record, label="{BB23:\l\l
+%8 = load %i\l
+%inc7 = add %8 1\l
+store %inc7 %i\l
+br BB17\l
+}"];
+BB23 -> BB17
+BB24 [shape=record, label="{BB24:\l\l
+%9 = load %run.addr\l
+%add = add %9 1\l
+%idxprom9 = sext %add\l
+%arrayidx10 = getelementptr %rmr 0 %idxprom9\l
+%10 = load %run.addr\l
+%add11 = add %10 1\l
+%idxprom12 = sext %add11\l
+%arrayidx13 = getelementptr %arrayidx10 0 %idxprom12\l
+%11 = load %arrayidx13\l
+%call = call @printf(%.str, %11)\lret\l
+}"];
+}

@@ -1,0 +1,31 @@
+digraph "CFG for 'Min0' function" {
+BB12 [shape=record, label="{BB12:\l\l
+%retval = alloca 1\l
+%arg1.addr = alloca 1\l
+%arg2.addr = alloca 1\l
+store %arg1 %arg1.addr\l
+store %arg2 %arg2.addr\l
+%1 = load %arg1.addr\l
+%2 = load %arg2.addr\l
+%cmp = icmp %1 %2\l
+br %cmp BB14 BB13\l
+}"];
+BB12 -> BB13
+BB12 -> BB14
+BB13 [shape=record, label="{BB13:\l\l
+%3 = load %arg1.addr\l
+store %3 %retval\l
+br BB15\l
+}"];
+BB13 -> BB15
+BB14 [shape=record, label="{BB14:\l\l
+%4 = load %arg2.addr\l
+store %4 %retval\l
+br BB15\l
+}"];
+BB14 -> BB15
+BB15 [shape=record, label="{BB15:\l\l
+%5 = load %retval\l
+ret %5\l
+}"];
+}

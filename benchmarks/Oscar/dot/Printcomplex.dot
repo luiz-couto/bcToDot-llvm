@@ -1,0 +1,68 @@
+digraph "CFG for 'Printcomplex' function" {
+BB16 [shape=record, label="{BB16:\l\l
+%zarray.addr = alloca 1\l
+%start.addr = alloca 1\l
+%finish.addr = alloca 1\l
+%increment.addr = alloca 1\l
+%i = alloca 1\l
+store %zarray %zarray.addr\l
+store %start %start.addr\l
+store %finish %finish.addr\l
+store %increment %increment.addr\l
+%call = call @printf(%.str)\l%1 = load %start.addr\l
+store %1 %i\l
+br BB17\l
+}"];
+BB16 -> BB17
+BB17 [shape=record, label="{BB17:\l\l
+%2 = load %zarray.addr\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %2 %idxprom\l
+%rp = getelementptr %arrayidx 0 0\l
+%4 = load %rp\l
+%conv = fpext %4\l
+%5 = load %zarray.addr\l
+%6 = load %i\l
+%idxprom1 = sext %6\l
+%arrayidx2 = getelementptr %5 %idxprom1\l
+%ip = getelementptr %arrayidx2 0 1\l
+%7 = load %ip\l
+%conv3 = fpext %7\l
+%call4 = call @printf(%.str.1, %conv, %conv3)\l%8 = load %i\l
+%9 = load %increment.addr\l
+%add = add %8 %9\l
+store %add %i\l
+%10 = load %zarray.addr\l
+%11 = load %i\l
+%idxprom5 = sext %11\l
+%arrayidx6 = getelementptr %10 %idxprom5\l
+%rp7 = getelementptr %arrayidx6 0 0\l
+%12 = load %rp7\l
+%conv8 = fpext %12\l
+%13 = load %zarray.addr\l
+%14 = load %i\l
+%idxprom9 = sext %14\l
+%arrayidx10 = getelementptr %13 %idxprom9\l
+%ip11 = getelementptr %arrayidx10 0 1\l
+%15 = load %ip11\l
+%conv12 = fpext %15\l
+%call13 = call @printf(%.str.1, %conv8, %conv12)\l%call14 = call @printf(%.str)\l%16 = load %i\l
+%17 = load %increment.addr\l
+%add15 = add %16 %17\l
+store %add15 %i\l
+br BB18\l
+}"];
+BB17 -> BB18
+BB18 [shape=record, label="{BB18:\l\l
+%18 = load %i\l
+%19 = load %finish.addr\l
+%cmp = icmp %18 %19\l
+br %cmp BB19 BB17\l
+}"];
+BB18 -> BB17
+BB18 -> BB19
+BB19 [shape=record, label="{BB19:\l\l
+ret\l
+}"];
+}

@@ -1,0 +1,14 @@
+digraph "CFG for 'Move' function" {
+BB25 [shape=record, label="{BB25:\l\l
+%s1.addr = alloca 1\l
+%s2.addr = alloca 1\l
+store %s1 %s1.addr\l
+store %s2 %s2.addr\l
+%1 = load %s1.addr\l
+%call = call @Pop(%1)\l%2 = load %s2.addr\l
+call @Push(%call, %2)\l%3 = load %movesdone\l
+%add = add %3 1\l
+store %add %movesdone\l
+ret\l
+}"];
+}

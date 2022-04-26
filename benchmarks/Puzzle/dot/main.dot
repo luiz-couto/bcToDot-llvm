@@ -1,0 +1,31 @@
+digraph "CFG for 'main' function" {
+BB236 [shape=record, label="{BB236:\l\l
+%retval = alloca 1\l
+%i = alloca 1\l
+store 0 %retval\l
+store 0 %i\l
+br BB237\l
+}"];
+BB236 -> BB237
+BB237 [shape=record, label="{BB237:\l\l
+%1 = load %i\l
+%cmp = icmp %1 100\l
+br %cmp BB240 BB238\l
+}"];
+BB237 -> BB238
+BB237 -> BB240
+BB238 [shape=record, label="{BB238:\l\l
+call @Puzzle()\lbr BB239\l
+}"];
+BB238 -> BB239
+BB239 [shape=record, label="{BB239:\l\l
+%2 = load %i\l
+%inc = add %2 1\l
+store %inc %i\l
+br BB237\l
+}"];
+BB239 -> BB237
+BB240 [shape=record, label="{BB240:\l\l
+ret 0\l
+}"];
+}

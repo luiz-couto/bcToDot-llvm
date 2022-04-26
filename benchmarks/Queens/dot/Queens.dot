@@ -1,0 +1,33 @@
+digraph "CFG for 'Queens' function" {
+BB30 [shape=record, label="{BB30:\l\l
+%run.addr = alloca 1\l
+%i = alloca 1\l
+store %run %run.addr\l
+store 1 %i\l
+br BB31\l
+}"];
+BB30 -> BB31
+BB31 [shape=record, label="{BB31:\l\l
+%1 = load %i\l
+%cmp = icmp %1 50\l
+br %cmp BB34 BB32\l
+}"];
+BB31 -> BB32
+BB31 -> BB34
+BB32 [shape=record, label="{BB32:\l\l
+call @Doit()\lbr BB33\l
+}"];
+BB32 -> BB33
+BB33 [shape=record, label="{BB33:\l\l
+%2 = load %i\l
+%inc = add %2 1\l
+store %inc %i\l
+br BB31\l
+}"];
+BB33 -> BB31
+BB34 [shape=record, label="{BB34:\l\l
+%3 = load %run.addr\l
+%add = add %3 1\l
+%call = call @printf(%.str.1, %add)\lret\l
+}"];
+}

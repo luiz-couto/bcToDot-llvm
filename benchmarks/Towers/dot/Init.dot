@@ -1,0 +1,37 @@
+digraph "CFG for 'Init' function" {
+BB15 [shape=record, label="{BB15:\l\l
+%s.addr = alloca 1\l
+%n.addr = alloca 1\l
+%discctr = alloca 1\l
+store %s %s.addr\l
+store %n %n.addr\l
+%1 = load %s.addr\l
+call @Makenull(%1)\l%2 = load %n.addr\l
+store %2 %discctr\l
+br BB16\l
+}"];
+BB15 -> BB16
+BB16 [shape=record, label="{BB16:\l\l
+%3 = load %discctr\l
+%cmp = icmp %3 1\l
+br %cmp BB19 BB17\l
+}"];
+BB16 -> BB17
+BB16 -> BB19
+BB17 [shape=record, label="{BB17:\l\l
+%4 = load %discctr\l
+%5 = load %s.addr\l
+call @Push(%4, %5)\lbr BB18\l
+}"];
+BB17 -> BB18
+BB18 [shape=record, label="{BB18:\l\l
+%6 = load %discctr\l
+%dec = add %6 4294967295\l
+store %dec %discctr\l
+br BB16\l
+}"];
+BB18 -> BB16
+BB19 [shape=record, label="{BB19:\l\l
+ret\l
+}"];
+}

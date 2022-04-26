@@ -1,0 +1,324 @@
+digraph "CFG for 'Fft' function" {
+BB32 [shape=record, label="{BB32:\l\l
+%n.addr = alloca 1\l
+%z.addr = alloca 1\l
+%w.addr = alloca 1\l
+%e.addr = alloca 1\l
+%sqrinv.addr = alloca 1\l
+%i = alloca 1\l
+%j = alloca 1\l
+%k = alloca 1\l
+%l = alloca 1\l
+%m = alloca 1\l
+%index = alloca 1\l
+store %n %n.addr\l
+store %z %z.addr\l
+store %w %w.addr\l
+store %e %e.addr\l
+store %sqrinv %sqrinv.addr\l
+%1 = load %n.addr\l
+%div = sdiv %1 2\l
+store %div %m\l
+store 1 %l\l
+br BB33\l
+}"];
+BB32 -> BB33
+BB33 [shape=record, label="{BB33:\l\l
+store 0 %k\l
+%2 = load %l\l
+store %2 %j\l
+store 1 %i\l
+br BB34\l
+}"];
+BB33 -> BB34
+BB34 [shape=record, label="{BB34:\l\l
+br BB35\l
+}"];
+BB34 -> BB35
+BB35 [shape=record, label="{BB35:\l\l
+%3 = load %z.addr\l
+%4 = load %i\l
+%idxprom = sext %4\l
+%arrayidx = getelementptr %3 %idxprom\l
+%rp = getelementptr %arrayidx 0 0\l
+%5 = load %rp\l
+%6 = load %z.addr\l
+%7 = load %m\l
+%8 = load %i\l
+%add = add %7 %8\l
+%idxprom3 = sext %add\l
+%arrayidx4 = getelementptr %6 %idxprom3\l
+%rp5 = getelementptr %arrayidx4 0 0\l
+%9 = load %rp5\l
+%add6 = fadd %5 %9\l
+%10 = load %w.addr\l
+%11 = load %i\l
+%12 = load %k\l
+%add7 = add %11 %12\l
+%idxprom8 = sext %add7\l
+%arrayidx9 = getelementptr %10 %idxprom8\l
+%rp10 = getelementptr %arrayidx9 0 0\l
+store %add6 %rp10\l
+%13 = load %z.addr\l
+%14 = load %i\l
+%idxprom11 = sext %14\l
+%arrayidx12 = getelementptr %13 %idxprom11\l
+%ip = getelementptr %arrayidx12 0 1\l
+%15 = load %ip\l
+%16 = load %z.addr\l
+%17 = load %m\l
+%18 = load %i\l
+%add13 = add %17 %18\l
+%idxprom14 = sext %add13\l
+%arrayidx15 = getelementptr %16 %idxprom14\l
+%ip16 = getelementptr %arrayidx15 0 1\l
+%19 = load %ip16\l
+%add17 = fadd %15 %19\l
+%20 = load %w.addr\l
+%21 = load %i\l
+%22 = load %k\l
+%add18 = add %21 %22\l
+%idxprom19 = sext %add18\l
+%arrayidx20 = getelementptr %20 %idxprom19\l
+%ip21 = getelementptr %arrayidx20 0 1\l
+store %add17 %ip21\l
+%23 = load %e.addr\l
+%24 = load %k\l
+%add22 = add %24 1\l
+%idxprom23 = sext %add22\l
+%arrayidx24 = getelementptr %23 %idxprom23\l
+%rp25 = getelementptr %arrayidx24 0 0\l
+%25 = load %rp25\l
+%26 = load %z.addr\l
+%27 = load %i\l
+%idxprom26 = sext %27\l
+%arrayidx27 = getelementptr %26 %idxprom26\l
+%rp28 = getelementptr %arrayidx27 0 0\l
+%28 = load %rp28\l
+%29 = load %z.addr\l
+%30 = load %i\l
+%31 = load %m\l
+%add29 = add %30 %31\l
+%idxprom30 = sext %add29\l
+%arrayidx31 = getelementptr %29 %idxprom30\l
+%rp32 = getelementptr %arrayidx31 0 0\l
+%32 = load %rp32\l
+%sub = fsub %28 %32\l
+%33 = load %e.addr\l
+%34 = load %k\l
+%add33 = add %34 1\l
+%idxprom34 = sext %add33\l
+%arrayidx35 = getelementptr %33 %idxprom34\l
+%ip36 = getelementptr %arrayidx35 0 1\l
+%35 = load %ip36\l
+%36 = load %z.addr\l
+%37 = load %i\l
+%idxprom37 = sext %37\l
+%arrayidx38 = getelementptr %36 %idxprom37\l
+%ip39 = getelementptr %arrayidx38 0 1\l
+%38 = load %ip39\l
+%39 = load %z.addr\l
+%40 = load %i\l
+%41 = load %m\l
+%add40 = add %40 %41\l
+%idxprom41 = sext %add40\l
+%arrayidx42 = getelementptr %39 %idxprom41\l
+%ip43 = getelementptr %arrayidx42 0 1\l
+%42 = load %ip43\l
+%sub44 = fsub %38 %42\l
+%mul45 = fmul %35 %sub44\l
+%neg = fneg %mul45\l
+%43 = call @llvm.fmuladd.f32(%25, %sub, %neg)\l%44 = load %w.addr\l
+%45 = load %i\l
+%46 = load %j\l
+%add46 = add %45 %46\l
+%idxprom47 = sext %add46\l
+%arrayidx48 = getelementptr %44 %idxprom47\l
+%rp49 = getelementptr %arrayidx48 0 0\l
+store %43 %rp49\l
+%47 = load %e.addr\l
+%48 = load %k\l
+%add50 = add %48 1\l
+%idxprom51 = sext %add50\l
+%arrayidx52 = getelementptr %47 %idxprom51\l
+%rp53 = getelementptr %arrayidx52 0 0\l
+%49 = load %rp53\l
+%50 = load %z.addr\l
+%51 = load %i\l
+%idxprom54 = sext %51\l
+%arrayidx55 = getelementptr %50 %idxprom54\l
+%ip56 = getelementptr %arrayidx55 0 1\l
+%52 = load %ip56\l
+%53 = load %z.addr\l
+%54 = load %i\l
+%55 = load %m\l
+%add57 = add %54 %55\l
+%idxprom58 = sext %add57\l
+%arrayidx59 = getelementptr %53 %idxprom58\l
+%ip60 = getelementptr %arrayidx59 0 1\l
+%56 = load %ip60\l
+%sub61 = fsub %52 %56\l
+%57 = load %e.addr\l
+%58 = load %k\l
+%add62 = add %58 1\l
+%idxprom63 = sext %add62\l
+%arrayidx64 = getelementptr %57 %idxprom63\l
+%ip65 = getelementptr %arrayidx64 0 1\l
+%59 = load %ip65\l
+%60 = load %z.addr\l
+%61 = load %i\l
+%idxprom66 = sext %61\l
+%arrayidx67 = getelementptr %60 %idxprom66\l
+%rp68 = getelementptr %arrayidx67 0 0\l
+%62 = load %rp68\l
+%63 = load %z.addr\l
+%64 = load %i\l
+%65 = load %m\l
+%add69 = add %64 %65\l
+%idxprom70 = sext %add69\l
+%arrayidx71 = getelementptr %63 %idxprom70\l
+%rp72 = getelementptr %arrayidx71 0 0\l
+%66 = load %rp72\l
+%sub73 = fsub %62 %66\l
+%mul74 = fmul %59 %sub73\l
+%67 = call @llvm.fmuladd.f32(%49, %sub61, %mul74)\l%68 = load %w.addr\l
+%69 = load %i\l
+%70 = load %j\l
+%add75 = add %69 %70\l
+%idxprom76 = sext %add75\l
+%arrayidx77 = getelementptr %68 %idxprom76\l
+%ip78 = getelementptr %arrayidx77 0 1\l
+store %67 %ip78\l
+%71 = load %i\l
+%add79 = add %71 1\l
+store %add79 %i\l
+br BB36\l
+}"];
+BB35 -> BB36
+BB36 [shape=record, label="{BB36:\l\l
+%72 = load %i\l
+%73 = load %j\l
+%cmp = icmp %72 %73\l
+br %cmp BB37 BB35\l
+}"];
+BB36 -> BB35
+BB36 -> BB37
+BB37 [shape=record, label="{BB37:\l\l
+%74 = load %j\l
+store %74 %k\l
+%75 = load %k\l
+%76 = load %l\l
+%add80 = add %75 %76\l
+store %add80 %j\l
+br BB38\l
+}"];
+BB37 -> BB38
+BB38 [shape=record, label="{BB38:\l\l
+%77 = load %j\l
+%78 = load %m\l
+%cmp82 = icmp %77 %78\l
+br %cmp82 BB39 BB34\l
+}"];
+BB38 -> BB34
+BB38 -> BB39
+BB39 [shape=record, label="{BB39:\l\l
+store 1 %index\l
+br BB40\l
+}"];
+BB39 -> BB40
+BB40 [shape=record, label="{BB40:\l\l
+%79 = load %z.addr\l
+%80 = load %index\l
+%idxprom85 = sext %80\l
+%arrayidx86 = getelementptr %79 %idxprom85\l
+%81 = load %w.addr\l
+%82 = load %index\l
+%idxprom87 = sext %82\l
+%arrayidx88 = getelementptr %81 %idxprom87\l
+call @llvm.memcpy.p0.p0.i64(%arrayidx86, %arrayidx88, 8, 0)\l%83 = load %index\l
+%add89 = add %83 1\l
+store %add89 %index\l
+br BB41\l
+}"];
+BB40 -> BB41
+BB41 [shape=record, label="{BB41:\l\l
+%84 = load %index\l
+%85 = load %n.addr\l
+%cmp91 = icmp %84 %85\l
+br %cmp91 BB42 BB40\l
+}"];
+BB41 -> BB40
+BB41 -> BB42
+BB42 [shape=record, label="{BB42:\l\l
+%86 = load %l\l
+%87 = load %l\l
+%add93 = add %86 %87\l
+store %add93 %l\l
+br BB43\l
+}"];
+BB42 -> BB43
+BB43 [shape=record, label="{BB43:\l\l
+%88 = load %l\l
+%89 = load %m\l
+%cmp95 = icmp %88 %89\l
+br %cmp95 BB44 BB33\l
+}"];
+BB43 -> BB33
+BB43 -> BB44
+BB44 [shape=record, label="{BB44:\l\l
+store 1 %i\l
+br BB45\l
+}"];
+BB44 -> BB45
+BB45 [shape=record, label="{BB45:\l\l
+%90 = load %i\l
+%91 = load %n.addr\l
+%cmp97 = icmp %90 %91\l
+br %cmp97 BB48 BB46\l
+}"];
+BB45 -> BB46
+BB45 -> BB48
+BB46 [shape=record, label="{BB46:\l\l
+%92 = load %sqrinv.addr\l
+%93 = load %z.addr\l
+%94 = load %i\l
+%idxprom98 = sext %94\l
+%arrayidx99 = getelementptr %93 %idxprom98\l
+%rp100 = getelementptr %arrayidx99 0 0\l
+%95 = load %rp100\l
+%mul = fmul %92 %95\l
+%96 = load %z.addr\l
+%97 = load %i\l
+%idxprom101 = sext %97\l
+%arrayidx102 = getelementptr %96 %idxprom101\l
+%rp103 = getelementptr %arrayidx102 0 0\l
+store %mul %rp103\l
+%98 = load %sqrinv.addr\l
+%fneg = fneg %98\l
+%99 = load %z.addr\l
+%100 = load %i\l
+%idxprom104 = sext %100\l
+%arrayidx105 = getelementptr %99 %idxprom104\l
+%ip106 = getelementptr %arrayidx105 0 1\l
+%101 = load %ip106\l
+%mul107 = fmul %fneg %101\l
+%102 = load %z.addr\l
+%103 = load %i\l
+%idxprom108 = sext %103\l
+%arrayidx109 = getelementptr %102 %idxprom108\l
+%ip110 = getelementptr %arrayidx109 0 1\l
+store %mul107 %ip110\l
+br BB47\l
+}"];
+BB46 -> BB47
+BB47 [shape=record, label="{BB47:\l\l
+%104 = load %i\l
+%inc = add %104 1\l
+store %inc %i\l
+br BB45\l
+}"];
+BB47 -> BB45
+BB48 [shape=record, label="{BB48:\l\l
+ret\l
+}"];
+}

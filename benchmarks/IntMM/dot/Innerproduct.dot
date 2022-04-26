@@ -1,0 +1,63 @@
+digraph "CFG for 'Innerproduct' function" {
+BB11 [shape=record, label="{BB11:\l\l
+%result.addr = alloca 1\l
+%a.addr = alloca 1\l
+%b.addr = alloca 1\l
+%row.addr = alloca 1\l
+%column.addr = alloca 1\l
+%i = alloca 1\l
+store %result %result.addr\l
+store %a %a.addr\l
+store %b %b.addr\l
+store %row %row.addr\l
+store %column %column.addr\l
+%1 = load %result.addr\l
+store 0 %1\l
+store 1 %i\l
+br BB12\l
+}"];
+BB11 -> BB12
+BB12 [shape=record, label="{BB12:\l\l
+%2 = load %i\l
+%cmp = icmp %2 40\l
+br %cmp BB15 BB13\l
+}"];
+BB12 -> BB13
+BB12 -> BB15
+BB13 [shape=record, label="{BB13:\l\l
+%3 = load %result.addr\l
+%4 = load %3\l
+%5 = load %a.addr\l
+%6 = load %row.addr\l
+%idxprom = sext %6\l
+%arrayidx = getelementptr %5 %idxprom\l
+%7 = load %i\l
+%idxprom1 = sext %7\l
+%arrayidx2 = getelementptr %arrayidx 0 %idxprom1\l
+%8 = load %arrayidx2\l
+%9 = load %b.addr\l
+%10 = load %i\l
+%idxprom3 = sext %10\l
+%arrayidx4 = getelementptr %9 %idxprom3\l
+%11 = load %column.addr\l
+%idxprom5 = sext %11\l
+%arrayidx6 = getelementptr %arrayidx4 0 %idxprom5\l
+%12 = load %arrayidx6\l
+%mul = mul %8 %12\l
+%add = add %4 %mul\l
+%13 = load %result.addr\l
+store %add %13\l
+br BB14\l
+}"];
+BB13 -> BB14
+BB14 [shape=record, label="{BB14:\l\l
+%14 = load %i\l
+%inc = add %14 1\l
+store %inc %i\l
+br BB12\l
+}"];
+BB14 -> BB12
+BB15 [shape=record, label="{BB15:\l\l
+ret\l
+}"];
+}

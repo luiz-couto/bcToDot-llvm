@@ -1,0 +1,98 @@
+digraph "CFG for 'Doit' function" {
+BB17 [shape=record, label="{BB17:\l\l
+%i = alloca 1\l
+%q = alloca 1\l
+%a = alloca 1\l
+%b = alloca 1\l
+%c = alloca 1\l
+%x = alloca 1\l
+store 4294967289 %i\l
+br BB18\l
+}"];
+BB17 -> BB18
+BB18 [shape=record, label="{BB18:\l\l
+%1 = load %i\l
+%cmp = icmp %1 16\l
+br %cmp BB27 BB19\l
+}"];
+BB18 -> BB19
+BB18 -> BB27
+BB19 [shape=record, label="{BB19:\l\l
+%2 = load %i\l
+%cmp1 = icmp %2 1\l
+br %cmp1 BB22 BB20\l
+}"];
+BB19 -> BB20
+BB19 -> BB22
+BB20 [shape=record, label="{BB20:\l\l
+%3 = load %i\l
+%cmp2 = icmp %3 8\l
+br %cmp2 BB22 BB21\l
+}"];
+BB20 -> BB21
+BB20 -> BB22
+BB21 [shape=record, label="{BB21:\l\l
+%4 = load %i\l
+%idxprom = sext %4\l
+%arrayidx = getelementptr %a 0 %idxprom\l
+store 1 %arrayidx\l
+br BB22\l
+}"];
+BB21 -> BB22
+BB22 [shape=record, label="{BB22:\l\l
+%5 = load %i\l
+%cmp3 = icmp %5 2\l
+br %cmp3 BB24 BB23\l
+}"];
+BB22 -> BB23
+BB22 -> BB24
+BB23 [shape=record, label="{BB23:\l\l
+%6 = load %i\l
+%idxprom5 = sext %6\l
+%arrayidx6 = getelementptr %b 0 %idxprom5\l
+store 1 %arrayidx6\l
+br BB24\l
+}"];
+BB23 -> BB24
+BB24 [shape=record, label="{BB24:\l\l
+%7 = load %i\l
+%cmp8 = icmp %7 7\l
+br %cmp8 BB26 BB25\l
+}"];
+BB24 -> BB25
+BB24 -> BB26
+BB25 [shape=record, label="{BB25:\l\l
+%8 = load %i\l
+%add = add %8 7\l
+%idxprom10 = sext %add\l
+%arrayidx11 = getelementptr %c 0 %idxprom10\l
+store 1 %arrayidx11\l
+br BB26\l
+}"];
+BB25 -> BB26
+BB26 [shape=record, label="{BB26:\l\l
+%9 = load %i\l
+%add13 = add %9 1\l
+store %add13 %i\l
+br BB18\l
+}"];
+BB26 -> BB18
+BB27 [shape=record, label="{BB27:\l\l
+%arraydecay = getelementptr %b 0 0\l
+%arraydecay14 = getelementptr %a 0 0\l
+%arraydecay15 = getelementptr %c 0 0\l
+%arraydecay16 = getelementptr %x 0 0\l
+call @Try(1, %q, %arraydecay, %arraydecay14, %arraydecay15, %arraydecay16)\l%10 = load %q\l
+%tobool = icmp %10 0\l
+br %tobool BB28 BB29\l
+}"];
+BB27 -> BB29
+BB27 -> BB28
+BB28 [shape=record, label="{BB28:\l\l
+%call = call @printf(%.str)\lbr BB29\l
+}"];
+BB28 -> BB29
+BB29 [shape=record, label="{BB29:\l\l
+ret\l
+}"];
+}

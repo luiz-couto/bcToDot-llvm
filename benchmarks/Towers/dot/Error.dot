@@ -1,0 +1,8 @@
+digraph "CFG for 'Error' function" {
+BB2 [shape=record, label="{BB2:\l\l
+%emsg.addr = alloca 1\l
+store %emsg %emsg.addr\l
+%1 = load %emsg.addr\l
+%call = call @printf(%.str, %1)\lret\l
+}"];
+}

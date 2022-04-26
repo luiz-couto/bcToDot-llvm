@@ -1,0 +1,112 @@
+digraph "CFG for 'Bubble' function" {
+BB12 [shape=record, label="{BB12:\l\l
+%run.addr = alloca 1\l
+%i = alloca 1\l
+%j = alloca 1\l
+store %run %run.addr\l
+call @bInitarr()\lstore 500 %top\l
+br BB13\l
+}"];
+BB12 -> BB13
+BB13 [shape=record, label="{BB13:\l\l
+%1 = load %top\l
+%cmp = icmp %1 1\l
+br %cmp BB20 BB14\l
+}"];
+BB13 -> BB14
+BB13 -> BB20
+BB14 [shape=record, label="{BB14:\l\l
+store 1 %i\l
+br BB15\l
+}"];
+BB14 -> BB15
+BB15 [shape=record, label="{BB15:\l\l
+%2 = load %i\l
+%3 = load %top\l
+%cmp2 = icmp %2 %3\l
+br %cmp2 BB19 BB16\l
+}"];
+BB15 -> BB16
+BB15 -> BB19
+BB16 [shape=record, label="{BB16:\l\l
+%4 = load %i\l
+%idxprom = sext %4\l
+%arrayidx = getelementptr %sortlist 0 %idxprom\l
+%5 = load %arrayidx\l
+%6 = load %i\l
+%add = add %6 1\l
+%idxprom4 = sext %add\l
+%arrayidx5 = getelementptr %sortlist 0 %idxprom4\l
+%7 = load %arrayidx5\l
+%cmp6 = icmp %5 %7\l
+br %cmp6 BB18 BB17\l
+}"];
+BB16 -> BB17
+BB16 -> BB18
+BB17 [shape=record, label="{BB17:\l\l
+%8 = load %i\l
+%idxprom7 = sext %8\l
+%arrayidx8 = getelementptr %sortlist 0 %idxprom7\l
+%9 = load %arrayidx8\l
+store %9 %j\l
+%10 = load %i\l
+%add9 = add %10 1\l
+%idxprom10 = sext %add9\l
+%arrayidx11 = getelementptr %sortlist 0 %idxprom10\l
+%11 = load %arrayidx11\l
+%12 = load %i\l
+%idxprom12 = sext %12\l
+%arrayidx13 = getelementptr %sortlist 0 %idxprom12\l
+store %11 %arrayidx13\l
+%13 = load %j\l
+%14 = load %i\l
+%add14 = add %14 1\l
+%idxprom15 = sext %add14\l
+%arrayidx16 = getelementptr %sortlist 0 %idxprom15\l
+store %13 %arrayidx16\l
+br BB18\l
+}"];
+BB17 -> BB18
+BB18 [shape=record, label="{BB18:\l\l
+%15 = load %i\l
+%add17 = add %15 1\l
+store %add17 %i\l
+br BB15\l
+}"];
+BB18 -> BB15
+BB19 [shape=record, label="{BB19:\l\l
+%16 = load %top\l
+%sub = sub %16 1\l
+store %sub %top\l
+br BB13\l
+}"];
+BB19 -> BB13
+BB20 [shape=record, label="{BB20:\l\l
+%17 = load  (%sortlist01)\l
+%18 = load %littlest\l
+%cmp19 = icmp %17 %18\l
+br %cmp19 BB21 BB22\l
+}"];
+BB20 -> BB22
+BB20 -> BB21
+BB21 [shape=record, label="{BB21:\l\l
+%19 = load  (%sortlist0500)\l
+%20 = load %biggest\l
+%cmp20 = icmp %19 %20\l
+br %cmp20 BB23 BB22\l
+}"];
+BB21 -> BB22
+BB21 -> BB23
+BB22 [shape=record, label="{BB22:\l\l
+%call = call @printf(%.str)\lbr BB23\l
+}"];
+BB22 -> BB23
+BB23 [shape=record, label="{BB23:\l\l
+%21 = load %run.addr\l
+%add23 = add %21 1\l
+%idxprom24 = sext %add23\l
+%arrayidx25 = getelementptr %sortlist 0 %idxprom24\l
+%22 = load %arrayidx25\l
+%call26 = call @printf(%.str.1, %22)\lret\l
+}"];
+}

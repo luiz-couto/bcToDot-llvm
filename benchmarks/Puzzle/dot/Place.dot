@@ -1,0 +1,122 @@
+digraph "CFG for 'Place' function" {
+BB12 [shape=record, label="{BB12:\l\l
+%retval = alloca 1\l
+%i.addr = alloca 1\l
+%j.addr = alloca 1\l
+%k = alloca 1\l
+store %i %i.addr\l
+store %j %j.addr\l
+store 0 %k\l
+br BB13\l
+}"];
+BB12 -> BB13
+BB13 [shape=record, label="{BB13:\l\l
+%1 = load %k\l
+%2 = load %i.addr\l
+%idxprom = sext %2\l
+%arrayidx = getelementptr %piecemax 0 %idxprom\l
+%3 = load %arrayidx\l
+%cmp = icmp %1 %3\l
+br %cmp BB18 BB14\l
+}"];
+BB13 -> BB14
+BB13 -> BB18
+BB14 [shape=record, label="{BB14:\l\l
+%4 = load %i.addr\l
+%idxprom1 = sext %4\l
+%arrayidx2 = getelementptr %p 0 %idxprom1\l
+%5 = load %k\l
+%idxprom3 = sext %5\l
+%arrayidx4 = getelementptr %arrayidx2 0 %idxprom3\l
+%6 = load %arrayidx4\l
+%tobool = icmp %6 0\l
+br %tobool BB16 BB15\l
+}"];
+BB14 -> BB15
+BB14 -> BB16
+BB15 [shape=record, label="{BB15:\l\l
+%7 = load %j.addr\l
+%8 = load %k\l
+%add = add %7 %8\l
+%idxprom5 = sext %add\l
+%arrayidx6 = getelementptr %puzzl 0 %idxprom5\l
+store 1 %arrayidx6\l
+br BB16\l
+}"];
+BB15 -> BB16
+BB16 [shape=record, label="{BB16:\l\l
+br BB17\l
+}"];
+BB16 -> BB17
+BB17 [shape=record, label="{BB17:\l\l
+%9 = load %k\l
+%inc = add %9 1\l
+store %inc %k\l
+br BB13\l
+}"];
+BB17 -> BB13
+BB18 [shape=record, label="{BB18:\l\l
+%10 = load %i.addr\l
+%idxprom7 = sext %10\l
+%arrayidx8 = getelementptr %class 0 %idxprom7\l
+%11 = load %arrayidx8\l
+%idxprom9 = sext %11\l
+%arrayidx10 = getelementptr %piececount 0 %idxprom9\l
+%12 = load %arrayidx10\l
+%sub = sub %12 1\l
+%13 = load %i.addr\l
+%idxprom11 = sext %13\l
+%arrayidx12 = getelementptr %class 0 %idxprom11\l
+%14 = load %arrayidx12\l
+%idxprom13 = sext %14\l
+%arrayidx14 = getelementptr %piececount 0 %idxprom13\l
+store %sub %arrayidx14\l
+%15 = load %j.addr\l
+store %15 %k\l
+br BB19\l
+}"];
+BB18 -> BB19
+BB19 [shape=record, label="{BB19:\l\l
+%16 = load %k\l
+%cmp16 = icmp %16 511\l
+br %cmp16 BB24 BB20\l
+}"];
+BB19 -> BB20
+BB19 -> BB24
+BB20 [shape=record, label="{BB20:\l\l
+%17 = load %k\l
+%idxprom18 = sext %17\l
+%arrayidx19 = getelementptr %puzzl 0 %idxprom18\l
+%18 = load %arrayidx19\l
+%tobool20 = icmp %18 0\l
+br %tobool20 BB21 BB22\l
+}"];
+BB20 -> BB22
+BB20 -> BB21
+BB21 [shape=record, label="{BB21:\l\l
+%19 = load %k\l
+store %19 %retval\l
+br BB25\l
+}"];
+BB21 -> BB25
+BB22 [shape=record, label="{BB22:\l\l
+br BB23\l
+}"];
+BB22 -> BB23
+BB23 [shape=record, label="{BB23:\l\l
+%20 = load %k\l
+%inc24 = add %20 1\l
+store %inc24 %k\l
+br BB19\l
+}"];
+BB23 -> BB19
+BB24 [shape=record, label="{BB24:\l\l
+store 0 %retval\l
+br BB25\l
+}"];
+BB24 -> BB25
+BB25 [shape=record, label="{BB25:\l\l
+%21 = load %retval\l
+ret %21\l
+}"];
+}

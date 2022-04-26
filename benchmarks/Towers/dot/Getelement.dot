@@ -1,0 +1,31 @@
+digraph "CFG for 'Getelement' function" {
+BB4 [shape=record, label="{BB4:\l\l
+%temp = alloca 1\l
+store 0 %temp\l
+%1 = load %freelist\l
+%cmp = icmp %1 0\l
+br %cmp BB6 BB5\l
+}"];
+BB4 -> BB5
+BB4 -> BB6
+BB5 [shape=record, label="{BB5:\l\l
+%2 = load %freelist\l
+store %2 %temp\l
+%3 = load %freelist\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %cellspace 0 %idxprom\l
+%next = getelementptr %arrayidx 0 1\l
+%4 = load %next\l
+store %4 %freelist\l
+br BB7\l
+}"];
+BB5 -> BB7
+BB6 [shape=record, label="{BB6:\l\l
+call @Error(%.str.1)\lbr BB7\l
+}"];
+BB6 -> BB7
+BB7 [shape=record, label="{BB7:\l\l
+%5 = load %temp\l
+ret %5\l
+}"];
+}

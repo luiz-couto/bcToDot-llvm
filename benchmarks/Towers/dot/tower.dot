@@ -1,0 +1,44 @@
+digraph "CFG for 'tower' function" {
+BB26 [shape=record, label="{BB26:\l\l
+%i.addr = alloca 1\l
+%j.addr = alloca 1\l
+%k.addr = alloca 1\l
+%other = alloca 1\l
+store %i %i.addr\l
+store %j %j.addr\l
+store %k %k.addr\l
+%1 = load %k.addr\l
+%cmp = icmp %1 1\l
+br %cmp BB28 BB27\l
+}"];
+BB26 -> BB27
+BB26 -> BB28
+BB27 [shape=record, label="{BB27:\l\l
+%2 = load %i.addr\l
+%3 = load %j.addr\l
+call @Move(%2, %3)\lbr BB29\l
+}"];
+BB27 -> BB29
+BB28 [shape=record, label="{BB28:\l\l
+%4 = load %i.addr\l
+%sub = sub 6 %4\l
+%5 = load %j.addr\l
+%sub1 = sub %sub %5\l
+store %sub1 %other\l
+%6 = load %i.addr\l
+%7 = load %other\l
+%8 = load %k.addr\l
+%sub2 = sub %8 1\l
+call @tower(%6, %7, %sub2)\l%9 = load %i.addr\l
+%10 = load %j.addr\l
+call @Move(%9, %10)\l%11 = load %other\l
+%12 = load %j.addr\l
+%13 = load %k.addr\l
+%sub3 = sub %13 1\l
+call @tower(%11, %12, %sub3)\lbr BB29\l
+}"];
+BB28 -> BB29
+BB29 [shape=record, label="{BB29:\l\l
+ret\l
+}"];
+}

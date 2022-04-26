@@ -1,0 +1,63 @@
+digraph "CFG for 'Trees' function" {
+BB40 [shape=record, label="{BB40:\l\l
+%run.addr = alloca 1\l
+%i = alloca 1\l
+store %run %run.addr\l
+call @tInitarr()\l%call = call @malloc(24)\lstore %call %tree\l
+%1 = load %tree\l
+%left = getelementptr %1 0 0\l
+store  %left\l
+%2 = load %tree\l
+%right = getelementptr %2 0 1\l
+store  %right\l
+%3 = load  (%sortlist01)\l
+%4 = load %tree\l
+%val = getelementptr %4 0 2\l
+store %3 %val\l
+store 2 %i\l
+br BB41\l
+}"];
+BB40 -> BB41
+BB41 [shape=record, label="{BB41:\l\l
+%5 = load %i\l
+%cmp = icmp %5 5000\l
+br %cmp BB44 BB42\l
+}"];
+BB41 -> BB42
+BB41 -> BB44
+BB42 [shape=record, label="{BB42:\l\l
+%6 = load %i\l
+%idxprom = sext %6\l
+%arrayidx = getelementptr %sortlist 0 %idxprom\l
+%7 = load %arrayidx\l
+%8 = load %tree\l
+call @Insert(%7, %8)\lbr BB43\l
+}"];
+BB42 -> BB43
+BB43 [shape=record, label="{BB43:\l\l
+%9 = load %i\l
+%inc = add %9 1\l
+store %inc %i\l
+br BB41\l
+}"];
+BB43 -> BB41
+BB44 [shape=record, label="{BB44:\l\l
+%10 = load %run.addr\l
+%add = add 2 %10\l
+%idxprom1 = sext %add\l
+%arrayidx2 = getelementptr %sortlist 0 %idxprom1\l
+%11 = load %arrayidx2\l
+%call3 = call @printf(%.str, %11)\l%12 = load %tree\l
+%call4 = call @Checktree(%12)\l%tobool = icmp %call4 0\l
+br %tobool BB45 BB46\l
+}"];
+BB44 -> BB46
+BB44 -> BB45
+BB45 [shape=record, label="{BB45:\l\l
+%call5 = call @printf(%.str.1)\lbr BB46\l
+}"];
+BB45 -> BB46
+BB46 [shape=record, label="{BB46:\l\l
+ret\l
+}"];
+}

@@ -1,0 +1,22 @@
+digraph "CFG for 'Uniform11' function" {
+BB20 [shape=record, label="{BB20:\l\l
+%iy.addr = alloca 1\l
+%yfl.addr = alloca 1\l
+store %iy %iy.addr\l
+store %yfl %yfl.addr\l
+%1 = load %iy.addr\l
+%2 = load %1\l
+%mul = mul 4855 %2\l
+%add = add %mul 1731\l
+%and = and %add 8191\l
+%3 = load %iy.addr\l
+store %and %3\l
+%4 = load %iy.addr\l
+%5 = load %4\l
+%conv = sitofp %5\l
+%div = fdiv %conv \l
+%6 = load %yfl.addr\l
+store %div %6\l
+ret\l
+}"];
+}

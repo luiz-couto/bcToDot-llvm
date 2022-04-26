@@ -1,0 +1,42 @@
+digraph "CFG for 'Perm' function" {
+BB15 [shape=record, label="{BB15:\l\l
+%i = alloca 1\l
+store 0 %pctr\l
+store 1 %i\l
+br BB16\l
+}"];
+BB15 -> BB16
+BB16 [shape=record, label="{BB16:\l\l
+%1 = load %i\l
+%cmp = icmp %1 5\l
+br %cmp BB19 BB17\l
+}"];
+BB16 -> BB17
+BB16 -> BB19
+BB17 [shape=record, label="{BB17:\l\l
+call @Initialize()\lcall @Permute(7)\lbr BB18\l
+}"];
+BB17 -> BB18
+BB18 [shape=record, label="{BB18:\l\l
+%2 = load %i\l
+%inc = add %2 1\l
+store %inc %i\l
+br BB16\l
+}"];
+BB18 -> BB16
+BB19 [shape=record, label="{BB19:\l\l
+%3 = load %pctr\l
+%cmp1 = icmp %3 43300\l
+br %cmp1 BB21 BB20\l
+}"];
+BB19 -> BB20
+BB19 -> BB21
+BB20 [shape=record, label="{BB20:\l\l
+%call = call @printf(%.str)\lbr BB21\l
+}"];
+BB20 -> BB21
+BB21 [shape=record, label="{BB21:\l\l
+%4 = load %pctr\l
+%call2 = call @printf(%.str.1, %4)\lret\l
+}"];
+}

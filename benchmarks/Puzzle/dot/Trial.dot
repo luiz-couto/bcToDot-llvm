@@ -1,0 +1,99 @@
+digraph "CFG for 'Trial' function" {
+BB33 [shape=record, label="{BB33:\l\l
+%retval = alloca 1\l
+%j.addr = alloca 1\l
+%i = alloca 1\l
+%k = alloca 1\l
+store %j %j.addr\l
+%1 = load %kount\l
+%add = add %1 1\l
+store %add %kount\l
+store 0 %i\l
+br BB34\l
+}"];
+BB33 -> BB34
+BB34 [shape=record, label="{BB34:\l\l
+%2 = load %i\l
+%cmp = icmp %2 12\l
+br %cmp BB45 BB35\l
+}"];
+BB34 -> BB35
+BB34 -> BB45
+BB35 [shape=record, label="{BB35:\l\l
+%3 = load %i\l
+%idxprom = sext %3\l
+%arrayidx = getelementptr %class 0 %idxprom\l
+%4 = load %arrayidx\l
+%idxprom1 = sext %4\l
+%arrayidx2 = getelementptr %piececount 0 %idxprom1\l
+%5 = load %arrayidx2\l
+%cmp3 = icmp %5 0\l
+br %cmp3 BB43 BB36\l
+}"];
+BB35 -> BB36
+BB35 -> BB43
+BB36 [shape=record, label="{BB36:\l\l
+%6 = load %i\l
+%7 = load %j.addr\l
+%call = call @Fit(%6, %7)\l%tobool = icmp %call 0\l
+br %tobool BB42 BB37\l
+}"];
+BB36 -> BB37
+BB36 -> BB42
+BB37 [shape=record, label="{BB37:\l\l
+%8 = load %i\l
+%9 = load %j.addr\l
+%call5 = call @Place(%8, %9)\lstore %call5 %k\l
+%10 = load %k\l
+%call6 = call @Trial(%10)\l%tobool7 = icmp %call6 0\l
+br %tobool7 BB38 BB39\l
+}"];
+BB37 -> BB39
+BB37 -> BB38
+BB38 [shape=record, label="{BB38:\l\l
+%11 = load %k\l
+%cmp8 = icmp %11 0\l
+br %cmp8 BB40 BB39\l
+}"];
+BB38 -> BB39
+BB38 -> BB40
+BB39 [shape=record, label="{BB39:\l\l
+store 1 %retval\l
+br BB46\l
+}"];
+BB39 -> BB46
+BB40 [shape=record, label="{BB40:\l\l
+%12 = load %i\l
+%13 = load %j.addr\l
+call @Remove(%12, %13)\lbr BB41\l
+}"];
+BB40 -> BB41
+BB41 [shape=record, label="{BB41:\l\l
+br BB42\l
+}"];
+BB41 -> BB42
+BB42 [shape=record, label="{BB42:\l\l
+br BB43\l
+}"];
+BB42 -> BB43
+BB43 [shape=record, label="{BB43:\l\l
+br BB44\l
+}"];
+BB43 -> BB44
+BB44 [shape=record, label="{BB44:\l\l
+%14 = load %i\l
+%inc = add %14 1\l
+store %inc %i\l
+br BB34\l
+}"];
+BB44 -> BB34
+BB45 [shape=record, label="{BB45:\l\l
+store 0 %retval\l
+br BB46\l
+}"];
+BB45 -> BB46
+BB46 [shape=record, label="{BB46:\l\l
+%15 = load %retval\l
+ret %15\l
+}"];
+}

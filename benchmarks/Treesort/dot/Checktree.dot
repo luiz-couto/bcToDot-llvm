@@ -1,0 +1,118 @@
+digraph "CFG for 'Checktree' function" {
+BB25 [shape=record, label="{BB25:\l\l
+%p.addr = alloca 1\l
+%result = alloca 1\l
+store %p %p.addr\l
+store 1 %result\l
+%1 = load %p.addr\l
+%left = getelementptr %1 0 0\l
+%2 = load %left\l
+%cmp = icmp %2 \l
+br %cmp BB32 BB26\l
+}"];
+BB25 -> BB26
+BB25 -> BB32
+BB26 [shape=record, label="{BB26:\l\l
+%3 = load %p.addr\l
+%left1 = getelementptr %3 0 0\l
+%4 = load %left1\l
+%val = getelementptr %4 0 2\l
+%5 = load %val\l
+%6 = load %p.addr\l
+%val2 = getelementptr %6 0 2\l
+%7 = load %val2\l
+%cmp3 = icmp %5 %7\l
+br %cmp3 BB28 BB27\l
+}"];
+BB26 -> BB27
+BB26 -> BB28
+BB27 [shape=record, label="{BB27:\l\l
+store 0 %result\l
+br BB31\l
+}"];
+BB27 -> BB31
+BB28 [shape=record, label="{BB28:\l\l
+%8 = load %p.addr\l
+%left5 = getelementptr %8 0 0\l
+%9 = load %left5\l
+%call = call @Checktree(%9)\l%tobool = icmp %call 0\l
+br %tobool BB30 BB29\l
+}"];
+BB28 -> BB29
+BB28 -> BB30
+BB29 [shape=record, label="{BB29:\l\l
+%10 = load %result\l
+%tobool6 = icmp %10 0\l
+br BB30\l
+}"];
+BB29 -> BB30
+BB30 [shape=record, label="{BB30:\l\l
+%11 = phi [0, BB28 ],  [%tobool6, BB29 ]\l
+%land.ext = zext %11\l
+store %land.ext %result\l
+br BB31\l
+}"];
+BB30 -> BB31
+BB31 [shape=record, label="{BB31:\l\l
+br BB32\l
+}"];
+BB31 -> BB32
+BB32 [shape=record, label="{BB32:\l\l
+%12 = load %p.addr\l
+%right = getelementptr %12 0 1\l
+%13 = load %right\l
+%cmp8 = icmp %13 \l
+br %cmp8 BB39 BB33\l
+}"];
+BB32 -> BB33
+BB32 -> BB39
+BB33 [shape=record, label="{BB33:\l\l
+%14 = load %p.addr\l
+%right10 = getelementptr %14 0 1\l
+%15 = load %right10\l
+%val11 = getelementptr %15 0 2\l
+%16 = load %val11\l
+%17 = load %p.addr\l
+%val12 = getelementptr %17 0 2\l
+%18 = load %val12\l
+%cmp13 = icmp %16 %18\l
+br %cmp13 BB35 BB34\l
+}"];
+BB33 -> BB34
+BB33 -> BB35
+BB34 [shape=record, label="{BB34:\l\l
+store 0 %result\l
+br BB38\l
+}"];
+BB34 -> BB38
+BB35 [shape=record, label="{BB35:\l\l
+%19 = load %p.addr\l
+%right16 = getelementptr %19 0 1\l
+%20 = load %right16\l
+%call17 = call @Checktree(%20)\l%tobool18 = icmp %call17 0\l
+br %tobool18 BB37 BB36\l
+}"];
+BB35 -> BB36
+BB35 -> BB37
+BB36 [shape=record, label="{BB36:\l\l
+%21 = load %result\l
+%tobool20 = icmp %21 0\l
+br BB37\l
+}"];
+BB36 -> BB37
+BB37 [shape=record, label="{BB37:\l\l
+%22 = phi [0, BB35 ],  [%tobool20, BB36 ]\l
+%land.ext22 = zext %22\l
+store %land.ext22 %result\l
+br BB38\l
+}"];
+BB37 -> BB38
+BB38 [shape=record, label="{BB38:\l\l
+br BB39\l
+}"];
+BB38 -> BB39
+BB39 [shape=record, label="{BB39:\l\l
+%23 = load %result\l
+ret %23\l
+}"];
+}
