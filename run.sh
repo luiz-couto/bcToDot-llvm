@@ -6,8 +6,9 @@ for d in */ ; do
     bench=${d%?}
     echo $bench
 
-    cd 
-    mkdir src
-    mv ${bench}.c src/${bench}.c
+    cd $bench
+    mkdir IR
+    mv ${bench}.ll src/${bench}.ll
+    cd ..
 
 done
