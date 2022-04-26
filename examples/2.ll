@@ -1,81 +1,70 @@
-; ModuleID = 'test.cpp'
-source_filename = "test.cpp"
-target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
-target triple = "x86_64-unknown-linux-gnu"
+; ModuleID = './test.cp'
+source_filename = "./test.cp"
+target datalayout = "e-m:o-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-apple-macosx11.0.0"
 
 @.str = private unnamed_addr constant [10 x i8] c"Max = %d\0A\00", align 1
+; Function Attrs: noinline norecurse optnone ssp uwtable
+define i32 @main(i32 %0, i8** %1) #0 {
+  %3 = alloca i32, align 4
+  %4 = alloca i32, align 4
+  %5 = alloca i8**, align 8
+  %6 = alloca i32, align 4
+  %7 = alloca i32, align 4
+  %8 = alloca i32, align 4
+  store i32 0, i32* %3, align 4
+  store i32 %0, i32* %4, align 4
+  store i8** %1, i8*** %5, align 8
+  store i32 1, i32* %6, align 4
+  store i32 0, i32* %7, align 4
+  br label %9
 
-; Function Attrs: mustprogress noinline norecurse uwtable
-define dso_local noundef i32 @main(i32 noundef %argc, ptr noundef %argv) #0 {
-entry:
-  %retval = alloca i32, align 4
-  %argc.addr = alloca i32, align 4
-  %argv.addr = alloca ptr, align 8
-  %i = alloca i32, align 4
-  %max = alloca i32, align 4
-  %aux = alloca i32, align 4
-  store i32 0, ptr %retval, align 4
-  store i32 %argc, ptr %argc.addr, align 4
-  store ptr %argv, ptr %argv.addr, align 8
-  store i32 1, ptr %i, align 4
-  store i32 0, ptr %max, align 4
-  br label %while.cond
+9:                                                ; preds = %27, %2
+  %10 = load i32, i32* %6, align 4
+  %11 = load i32, i32* %4, align 4
+  %12 = icmp slt i32 %10, %11
+  br i1 %12, label %13, label %28
 
-while.cond:                                       ; preds = %if.end, %entry
-  %0 = load i32, ptr %i, align 4
-  %1 = load i32, ptr %argc.addr, align 4
-  %cmp = icmp slt i32 %0, %1
-  br i1 %cmp, label %while.body, label %while.end
+13:                                               ; preds = %9
+  %14 = load i8**, i8*** %5, align 8
+  %15 = load i32, i32* %6, align 4
+  %16 = sext i32 %15 to i64
+  %17 = getelementptr inbounds i8*, i8** %14, i64 %16
+  %18 = load i8*, i8** %17, align 8
+  %19 = call i32 @atoi(i8* %18)
+  store i32 %19, i32* %8, align 4
+  %20 = load i32, i32* %6, align 4
+  %21 = add nsw i32 %20, 1
+  store i32 %21, i32* %6, align 4
+  %22 = load i32, i32* %8, align 4
+  %23 = load i32, i32* %7, align 4
+  %24 = icmp sgt i32 %22, %23
+  br i1 %24, label %25, label %27
 
-while.body:                                       ; preds = %while.cond
-  %2 = load ptr, ptr %argv.addr, align 8
-  %3 = load i32, ptr %i, align 4
-  %idxprom = sext i32 %3 to i64
-  %arrayidx = getelementptr inbounds ptr, ptr %2, i64 %idxprom
-  %4 = load ptr, ptr %arrayidx, align 8
-  %call = call i32 @atoi(ptr noundef %4) #3
-  store i32 %call, ptr %aux, align 4
-  %5 = load i32, ptr %i, align 4
-  %inc = add nsw i32 %5, 1
-  store i32 %inc, ptr %i, align 4
-  %6 = load i32, ptr %aux, align 4
-  %7 = load i32, ptr %max, align 4
-  %cmp1 = icmp sgt i32 %6, %7
-  br i1 %cmp1, label %if.then, label %if.end
+25:                                               ; preds = %13
+  %26 = load i32, i32* %8, align 4
+  store i32 %26, i32* %7, align 4
+  br label %27
 
-if.then:                                          ; preds = %while.body
-  %8 = load i32, ptr %aux, align 4
-  store i32 %8, ptr %max, align 4
-  br label %if.end
+27:                                               ; preds = %25, %13
+  br label %9
 
-if.end:                                           ; preds = %if.then, %while.body
-  br label %while.cond, !llvm.loop !6
-
-while.end:                                        ; preds = %while.cond
-  %9 = load i32, ptr %max, align 4
-  %call2 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %9)
-  %10 = load i32, ptr %retval, align 4
-  ret i32 %10
+28:                                               ; preds = %9
+  %29 = load i32, i32* %7, align 4
+  %30 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str, i64 0, i64 0), i32 %29)
+  %31 = load i32, i32* %3, align 4
+  ret i32 %31
 }
+declare i32 @atoi(i8*) #1
+declare i32 @printf(i8*, ...) #1
 
-; Function Attrs: nounwind readonly willreturn
-declare i32 @atoi(ptr noundef) #1
+attributes #0 = { noinline norecurse optnone ssp uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "darwin-stkchk-strong-link" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "probe-stack"="___chkstk_darwin" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #1 = { "correctly-rounded-divide-sqrt-fp-math"="false" "darwin-stkchk-strong-link" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "probe-stack"="___chkstk_darwin" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 
-declare i32 @printf(ptr noundef, ...) #2
+!llvm.module.flags = !{!0, !1, !2}
+!llvm.ident = !{!3}
 
-attributes #0 = { mustprogress noinline norecurse uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nounwind readonly willreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind readonly willreturn }
-
-!llvm.module.flags = !{!0, !1, !2, !3, !4}
-!llvm.ident = !{!5}
-
-!0 = !{i32 1, !"wchar_size", i32 4}
-!1 = !{i32 7, !"PIC Level", i32 2}
-!2 = !{i32 7, !"PIE Level", i32 2}
-!3 = !{i32 7, !"uwtable", i32 2}
-!4 = !{i32 7, !"frame-pointer", i32 2}
-!5 = !{!"clang version 15.0.0 (git@github.com:llvm/llvm-project.git 3f0f20366622ee5fd35a1d65d7db5226f5e5751f)"}
-!6 = distinct !{!6, !7}
-!7 = !{!"llvm.loop.mustprogress"}
+!0 = !{i32 2, !"SDK Version", [2 x i32] [i32 11, i32 1]}
+!1 = !{i32 1, !"wchar_size", i32 4}
+!2 = !{i32 7, !"PIC Level", i32 2}
+!3 = !{!"Apple clang version 12.0.0 (clang-1200.0.32.29)"}

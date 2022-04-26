@@ -5,3 +5,5 @@ It has the follow properties:
 - All the arguments of an instruction are printed next to this instruction.
 - Arguments that do not have names, such as getelementptr in function calls, are not printed.
 - Type information is not printed.
+
+## How To Run It

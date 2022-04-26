@@ -1,9 +1,38 @@
 #include "CFGPrinterBC.hpp"
-#include "llvm/Passes/PassBuilder.h"
 #include "llvm/Support/raw_ostream.h"
 #include <map>
 
+#include "llvm/IR/Constants.h"
+#include "llvm/IR/Function.h"
+#include "llvm/IR/InstrTypes.h"
+#include "llvm/IR/PassManager.h"
+#include "llvm/IR/Value.h"
+#include "llvm/IRReader/IRReader.h"
+#include "llvm/Passes/PassBuilder.h"
+#include "llvm/Passes/PassPlugin.h"
+#include "llvm/Support/Casting.h"
+#include "llvm/Support/CommandLine.h"
+
+#include "llvm/Support/SourceMgr.h"
+
 using namespace llvm;
+
+/// A category for the options specified for this tool.
+static cl::OptionCategory CFGPrinterBCCategory("addconst pass options");
+
+/// A required argument that specifies the module that will be transformed.
+static cl::opt<std::string> InputModule(cl::Positional,
+                                        cl::desc("<Input module>"),
+                                        cl::value_desc("bitcode filename"),
+                                        cl::init(""), cl::Required,
+                                        cl::cat(CFGPrinterBCCategory));
+
+/// An optional argument that specifies the name of the output file.
+static cl::opt<std::string> OutputModule("o", cl::Positional,
+                                         cl::desc("<Output module>"),
+                                         cl::value_desc("dot file name"),
+                                         cl::init("out.dot"),
+                                         cl::cat(CFGPrinterBCCategory));
 
 namespace cfgprinterbc {
 
@@ -36,13 +65,6 @@ void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB) {
     std::string res = BB.getName().str() + " [shape=record, label=\"{" + BB.getName().str() + ":\\l\\l\n";
     //OS << res;
     dotStr += res;
-
-    int counter = 0;
-    for (Instruction &I : BB) {
-        if (!I.getType()->isVoidTy()) {
-            I.setName(std::to_string(counter));
-        }
-    }
 
     for (Instruction &I : BB) {
         printInstruction(I);
@@ -114,14 +136,21 @@ void writeFile(std::string filename, std::string content) {
 
 PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FAM) {
     printFunctionName(F);
+    int counter = 1;
     
     for(BasicBlock &BB : F) {
         BB.setName("BB" + std::to_string(BBcounter));
-        printBasicBlock(BB);
         BBcounter++;
+        for (Instruction &I : BB) {
+            if (!I.hasName() && !I.getType()->isVoidTy()) {
+                I.setName(std::to_string(counter));
+                counter++;
+            }
+        }
     }
 
     for (BasicBlock &BB : F) {
+        printBasicBlock(BB);
         for (BasicBlock *BBSucc : successors(&BB)) {
             std::string res = BB.getName().str() + " -> " + BBSucc->getName().str() + '\n';
             //OS << res;
@@ -132,10 +161,49 @@ PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FA
     //OS << "}\n";
     dotStr += "}\n";
 
-    writeFile("teste.dot", dotStr);
+    writeFile(F.getName().str() + ".dot", dotStr);
 
     return PreservedAnalyses::all();
 }
-
-
 } // namespace cfgprinterbc
+
+int main(int Argc, char **Argv) {
+    // Hide all options apart from the ones specific to this tool.
+    cl::HideUnrelatedOptions(CFGPrinterBCCategory);
+
+    // Parse the command-line options that should be passed to the invariant
+    // pass.
+    cl::ParseCommandLineOptions(Argc, Argv,
+                            "generate dot representation for CFG's\n");
+
+    // Makes sure llvm_shutdown() is called (which cleans up LLVM objects)
+    // http://llvm.org/docs/ProgrammersManual.html#ending-execution-with-llvm-shutdown
+    llvm_shutdown_obj SDO;
+
+    // Parse the IR file passed on the command line.
+    SMDiagnostic Err;
+    LLVMContext Ctx;
+    std::unique_ptr<Module> M = parseIRFile(InputModule.getValue(), Err, Ctx);
+
+    if (!M) {
+        errs() << "Error reading bitcode file: " << InputModule << "\n";
+        Err.print(Argv[0], errs());
+        return -1;
+    }
+
+    // Create a FunctionPassManager and add the AddConstPass to it:
+    FunctionPassManager FPM;
+    FPM.addPass(cfgprinterbc::CFGPrinterBCPass(errs()));
+
+    FunctionAnalysisManager FAM;
+    // Register the module analyses:
+    PassBuilder PB;
+    PB.registerFunctionAnalyses(FAM);
+    // Finally, run the passes registered with FPM.
+    for (Function &F : *M) {
+        FPM.run(F, FAM);
+    }
+
+    return 0;
+}
+
