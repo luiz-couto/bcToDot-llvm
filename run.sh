@@ -8,13 +8,9 @@ for d in */ ; do
 
     cd $bench
     
-    mkdir src
-    mv ${bench}.c src/${bench}.c
+    cd IR
+    llvm-as ${bench}.ll -o ${bench}.bc
 
-    mkdir IR
-    mv ${bench}.ll IR/${bench}.ll
-    
-
-    cd ..
+    cd ../..
 
 done
