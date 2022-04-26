@@ -3,6 +3,7 @@
 
 #include "llvm/IR/PassManager.h"
 #include <map>
+#include <fstream>
 
 
 namespace cfgprinterbc {
@@ -10,9 +11,6 @@ namespace cfgprinterbc {
 /// A pass that prints bytecode programs into the dot format
 struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
     explicit CFGPrinterBCPass(llvm::raw_ostream &OS) : OS(OS) { BBcounter = 0; dotStr = ""; }
-    /// Gets the result of AddConstAnalysis for the function \p F and uses it
-    /// to replace the uses of the collected add instructions by their final
-    /// value.
     ///
     /// \returns set of preserved analyses (all of them, except for
     /// AddConstAnalysis).
@@ -21,7 +19,7 @@ struct CFGPrinterBCPass : public llvm::PassInfoMixin<CFGPrinterBCPass> {
 
 
     void printFunctionName(llvm::Function &F);
-    void printBasicBlock(llvm::BasicBlock &BB, std::map<std::string, int> labelMap);
+    void printBasicBlock(llvm::BasicBlock &BB);
     void printInstruction(llvm::Instruction &I);
 
     private:

@@ -1,0 +1,59 @@
+digraph "CFG for 'main' function" {
+BB0 [shape=record, label="{BB0:\l\l
+%0 = alloca 1\l
+%01 = alloca 1\l
+%02 = alloca 1\l
+%03 = alloca 1\l
+%04 = alloca 1\l
+%05 = alloca 1\l
+store %0 0\l
+store %01 %argc\l
+store %02 %argv\l
+store %03 1\l
+store %04 0\l
+br %while.cond\l
+}"];
+BB1 [shape=record, label="{BB1:\l\l
+%06 = load %03\l
+%07 = load %01\l
+%08 = icmp %07 %06\l
+br %while.body %while.end %08\l
+}"];
+BB2 [shape=record, label="{BB2:\l\l
+%09 = load %02\l
+%010 = load %03\l
+%011 = sext %010\l
+%012 = getelementptr %011 %09\l
+%013 = load %012\l
+%014 = call @atoi(%013)\l
+store %05 %014\l
+%015 = load %03\l
+%016 = add 1 %015\l
+store %03 %016\l
+%017 = load %05\l
+%018 = load %04\l
+%019 = icmp %018 %017\l
+br %if.then %if.end %019\l
+}"];
+BB3 [shape=record, label="{BB3:\l\l
+%020 = load %05\l
+store %04 %020\l
+br %if.end\l
+}"];
+BB4 [shape=record, label="{BB4:\l\l
+br %BB1\l
+}"];
+BB5 [shape=record, label="{BB5:\l\l
+%021 = load %04\l
+%022 = call @printf(%.str, %021)\l
+%023 = load %0\l
+ret %023\l
+}"];
+BB0 -> BB1
+BB1 -> BB2
+BB1 -> BB5
+BB2 -> BB3
+BB2 -> BB4
+BB3 -> BB4
+BB4 -> BB1
+}

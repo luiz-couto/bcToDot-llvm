@@ -29,10 +29,14 @@ std::string genOpStr(Value *operand) {
 
 void CFGPrinterBCPass::printFunctionName(Function &F) {
     OS << "digraph \"CFG for " << "'" << F.getName().str() << "'" << " function\" {" << '\n';
+    dotStr = dotStr + "digraph \"CFG for " + "'" + F.getName().str() + "'" + " function\" {" + '\n';
 }
 
-void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB, std::map<std::string, int> labelMap) {
-    OS << BB.getName().str() << " [shape=record, label=\"{" << BB.getName().str() << ":\\l\\l\n";
+void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB) {
+    std::string res = BB.getName().str() + " [shape=record, label=\"{" + BB.getName().str() + ":\\l\\l\n";
+    OS << res;
+    dotStr += res;
+
     int counter = 0;
     for (Instruction &I : BB) {
         if (!I.getType()->isVoidTy()) {
@@ -44,6 +48,7 @@ void CFGPrinterBCPass::printBasicBlock(BasicBlock &BB, std::map<std::string, int
         printInstruction(I);
     }
     OS << "}\"];\n";
+    dotStr += "}\"];\n";
 }
 
 void CFGPrinterBCPass::printInstruction(Instruction &I) {
@@ -57,13 +62,15 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
 
     if (PHINode *PN = dyn_cast<PHINode>(&I)) {
 
-        for (int i = 0; i < PN->getNumIncomingValues(); i++) {
+        for (unsigned int i = 0; i < PN->getNumIncomingValues(); i++) {
             result += std::string(i ? ", " : "");
             result += " [" + genOpStr(PN->getIncomingValue(i));
             result += ", " + genOpStr(PN->getIncomingBlock(i)) + " ]";
         }
 
-        OS << result << "\\l" << "\n";
+        result += "\\l\n";
+        OS << result;
+        dotStr += result;
         return;
     }
 	
@@ -71,15 +78,16 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
         result += " " + genOpStr(I.getOperand(I.getNumOperands() - 1));
         result += "(";
 
-        for (int i = 0; i < I.getNumOperands() - 1; i++) {
+        for (unsigned int i = 0; i < I.getNumOperands() - 1; i++) {
             result += genOpStr(I.getOperand(i));
                 if (i < I.getNumOperands() - 2) {
                     result += ", ";
                 }
         }
 
-        result += ")";
-        OS << result << "\\l" << "\n";
+        result += ")\\l\n";
+        OS << result;
+        dotStr += result;
         return;
     }
 
@@ -87,27 +95,44 @@ void CFGPrinterBCPass::printInstruction(Instruction &I) {
         result += " " + genOpStr(I.getOperand(i));
     }
 
-    OS << result << "\\l" << "\n";
+    result += "\\l\n";
+    OS << result;
+    dotStr += result;
+}
+
+void writeFile(std::string filename, std::string content) {
+    std::ofstream file(filename);
+
+    if (file.is_open()) file << content;
+    else {
+
+        errs() << "  error opening file for writing!";
+        errs() << "\n";
+    }
+
 }
 
 PreservedAnalyses CFGPrinterBCPass::run(Function &F, FunctionAnalysisManager &FAM) {
-    // get Function name
     printFunctionName(F);
-    std::map<std::string, int> labelMap;
     
     for(BasicBlock &BB : F) {
         BB.setName("BB" + std::to_string(BBcounter));
-        printBasicBlock(BB, labelMap);
+        printBasicBlock(BB);
         BBcounter++;
     }
 
     for (BasicBlock &BB : F) {
         for (BasicBlock *BBSucc : successors(&BB)) {
-            OS << BB.getName().str() << " -> " << BBSucc->getName().str() << '\n';
+            std::string res = BB.getName().str() + " -> " + BBSucc->getName().str() + '\n';
+            OS << res;
+            dotStr += res;
         }
     }
 
     OS << "}\n";
+    dotStr += "}\n";
+
+    writeFile("teste.dot", dotStr);
 
     return PreservedAnalyses::all();
 }
